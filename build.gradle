@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+
+mainClassName = "PanoViewer.PanoViewer"
+
+configurations {
+  // configuration that holds jars to include in the jar
+  extraLibs
+}
+
+repositories {
+  jcenter()
+  mavenCentral()
+}
+
+dependencies {
+  extraLibs group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
+  extraLibs group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
+  extraLibs files('libs/graphicslib3D.jar')
+  testImplementation     'junit:junit:4.13'
+  configurations.compile.extendsFrom(configurations.extraLibs)
+}
+jar {
+  from {
+    configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
