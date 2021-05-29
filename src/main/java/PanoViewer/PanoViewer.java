@@ -3,8 +3,13 @@
  */
 package PanoViewer;
 
-import PanoViewer.MainScreen;
-import javax.swing.JFileChooser;
+import PanoViewer.Utils.IOUtils;
+import PanoViewer.gui.PhotoSphere;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
@@ -17,13 +22,18 @@ public class PanoViewer {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    MainScreen mainScreen = new MainScreen();
+    BufferedImage img;
+    try {
+      img = ImageIO.read(IOUtils.getFileFromResource("test.jpg"));
+    } catch (IOException ex) {
+      Logger.getLogger(PanoViewer.class.getName()).log(Level.SEVERE, null, ex);
+      return;
+    }
     JFrame jFrame = new JFrame();
-    jFrame.add(mainScreen);
-    jFrame.setSize(1000, 1000);
-    jFrame.setVisible(true);
+    jFrame.setSize(600,600);
+    jFrame.add(new PhotoSphere(img, 200));
     jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    // TODO code application logic here
+    jFrame.setVisible(true);
   }
-  
+
 }
