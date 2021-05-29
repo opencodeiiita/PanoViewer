@@ -14,45 +14,50 @@ import org.joml.Vector3f;
  */
 public class Sphere {
 
-  private int numVertices, numIndices, prec; // prec = precision
+  private int numVertices, numIndices, horizontalP; // prec = precision
   private int[] indices;
   private Vector3f[] vertices;
   private Vector2f[] texCoords;
+  private final int verticalP;
 
-  public Sphere(int p) {
-    prec = p;
+  public Sphere(int width) {
+    horizontalP = width;
+    verticalP = horizontalP / 2;
     initSphere();
   }
 
   private void initSphere() {
-    numVertices = (prec + 1) * (prec + 1);
-    numIndices = prec * prec * 6;
+    numVertices = (verticalP + 1) * (horizontalP + 1);
+    numIndices = verticalP * horizontalP * 6;
     vertices = new Vector3f[numVertices];
     indices = new int[numIndices];
+    double sliceAngle = Math.PI / verticalP;
+    double sectorAngle = 2 * Math.PI / horizontalP;
     texCoords = new Vector2f[numVertices];
     for (int i = 0; i < numVertices; i++) {
       vertices[i] = new Vector3f();
       texCoords[i] = new Vector2f();
     }
 // calculate triangle vertices
-    for (int i = 0; i <= prec; i++) {
-      for (int j = 0; j <= prec; j++) {
-        float y = (float) cos(toRadians(180 - i * 180 / prec));
-        float x = -(float) cos(toRadians(j * 360 / prec)) * (float) abs(cos(asin(y)));
-        float z = (float) sin(toRadians(j * 360 / prec)) * (float) abs(cos(asin(y)));
-        vertices[i * (prec + 1) + j].set(x, y, z);
-        texCoords[i * (prec + 1) + j].set((float) j / prec, (float) i / prec);
+    for (int i = 0; i <= verticalP; i++) {
+      double theta = Math.PI - i * sliceAngle;
+        float y = (float) cos(Math.PI - i * sliceAngle);
+      for (int j = 0; j <= horizontalP; j++) {
+        float x = -(float) cos(j * sectorAngle) * (float) abs(sin(theta));
+        float z = (float) sin(j * sectorAngle) * (float) abs(sin(theta));
+        vertices[i * (horizontalP + 1) + j].set(x, y, z);
+        texCoords[i * (horizontalP + 1) + j].set(1 - (float) j / horizontalP, (float) i / verticalP);
       }
     }
 // calculate triangle indices
-    for (int i = 0; i < prec; i++) {
-      for (int j = 0; j < prec; j++) {
-        indices[6 * (i * prec + j) + 0] = i * (prec + 1) + j;
-        indices[6 * (i * prec + j) + 1] = i * (prec + 1) + j + 1;
-        indices[6 * (i * prec + j) + 2] = (i + 1) * (prec + 1) + j;
-        indices[6 * (i * prec + j) + 3] = i * (prec + 1) + j + 1;
-        indices[6 * (i * prec + j) + 4] = (i + 1) * (prec + 1) + j + 1;
-        indices[6 * (i * prec + j) + 5] = (i + 1) * (prec + 1) + j;
+    for (int i = 0; i < verticalP; i++) {
+      for (int j = 0; j < horizontalP; j++) {
+        indices[6 * (i * horizontalP + j) + 0] = i * (horizontalP + 1) + j;
+        indices[6 * (i * horizontalP + j) + 1] = i * (horizontalP + 1) + j + 1;
+        indices[6 * (i * horizontalP + j) + 2] = (i + 1) * (horizontalP + 1) + j;
+        indices[6 * (i * horizontalP + j) + 3] = i * (horizontalP + 1) + j + 1;
+        indices[6 * (i * horizontalP + j) + 4] = (i + 1) * (horizontalP + 1) + j + 1;
+        indices[6 * (i * horizontalP + j) + 5] = (i + 1) * (horizontalP + 1) + j;
       }
     }
   }
