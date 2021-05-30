@@ -16,7 +16,6 @@ repositories {
 }
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
-project.ext.jomlVersion = "1.10.1"
 dependencies {
   extraLibs group: 'org.joml', name: 'joml', version: '1.10.1'
   extraLibs group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2', classifier: 'sources'
@@ -25,7 +24,13 @@ dependencies {
   configurations.compile.extendsFrom(configurations.extraLibs)
 }
 jar {
+  manifest {
+    attributes(
+      'Main-Class': "$mainClassName"
+    )
+  }
+
   from {
-    configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
   }
 }
