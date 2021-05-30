@@ -15,9 +15,11 @@ import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
 import static com.jogamp.opengl.GL.GL_FLOAT;
 import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
 import static com.jogamp.opengl.GL.GL_LEQUAL;
+import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
 import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 import static com.jogamp.opengl.GL.GL_TEXTURE0;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
+import static com.jogamp.opengl.GL.GL_TEXTURE_MIN_FILTER;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static com.jogamp.opengl.GL2GL3.GL_LINE;
 import com.jogamp.opengl.GL4;
@@ -44,11 +46,11 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   private final int vbo[] = new int[2];
   private int rendering_program;
   private final Camera camera;
-  private FloatBuffer vals = Buffers.newDirectFloatBuffer(16);
+  private final FloatBuffer vals = Buffers.newDirectFloatBuffer(16);
   private Matrix4f pMat = new Matrix4f();
   private Matrix4f vMat = new Matrix4f();
-  private Matrix4f mvMat = new Matrix4f();
-  private Matrix4f mMat = new Matrix4f();
+  private final Matrix4f mvMat = new Matrix4f();
+  private final Matrix4f mMat = new Matrix4f();
   private int mvLoc, projLoc;
   private float aspect;
   private int texId;
@@ -57,8 +59,10 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   private int numVerts;
   private final ZoomPanLis listener;
   private final PhotoSphere instance;
-  private final float ax;
   private int fov;
+  private static final int MAX_FOV = 110;
+  private static final int MIN_FOV = 20;
+  private static final int IDEAL_FOV = 90;
 
   public PhotoSphere(BufferedImage img, int prec) {
     addGLEventListener(this);
@@ -69,18 +73,29 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     sphereLoc = new Vector3f(0, 0, 0);
     FPSAnimator animtr = new FPSAnimator(this, 30);
     animtr.start();
-     ax = 0.001f;
     listener = new ZoomPanLis() {
       @Override
       void rotate(double yaw, double pitch) {
-        camera.rotate((float) yaw, (float) pitch);
+        float newYaw = (float) (yaw * fov / IDEAL_FOV);
+        float newPitch = (float) (pitch * fov / IDEAL_FOV);
+        camera.rotate(newYaw, newPitch);
         vMat = camera.getViewMatrix();
+        instance.repaint();
+      }
+
+      @Override
+      void zoom(int zoomAmount) {
+        fov += zoomAmount;
+        fov = Math.min(fov, MAX_FOV);
+        fov = Math.max(fov, MIN_FOV);
+        pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
         instance.repaint();
       }
     };
     this.addMouseListener(listener);
     this.addMouseMotionListener(listener);
-    fov = 30;
+    this.addMouseWheelListener(listener);
+    fov = IDEAL_FOV;
   }
 
   @Override
@@ -100,7 +115,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   @Override
   public void display(GLAutoDrawable glad) {
-    
+
     GL4 gl = (GL4) GLContext.getCurrentGL();
     gl.glClear(GL_DEPTH_BUFFER_BIT);
     gl.glClear(GL_COLOR_BUFFER_BIT);
@@ -109,7 +124,6 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     projLoc = gl.glGetUniformLocation(rendering_program, "proj_matrix");
 //    mMat.rotate(500*x, 1000 * x, 0);
 // concatenate model and view matrix to create MV matrix
-    aspect = (float) getWidth() / (float) getHeight();
     pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
 
     mvMat.identity();
@@ -128,6 +142,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     gl.glEnableVertexAttribArray(1);
 
     gl.glActiveTexture(GL_TEXTURE0);
+    gl.glGenerateMipmap(GL_TEXTURE_2D);
     gl.glBindTexture(GL_TEXTURE_2D, texId);
 
     gl.glEnable(GL_DEPTH_TEST);

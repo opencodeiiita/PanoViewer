@@ -3,11 +3,8 @@
  */
 package PanoViewer;
 
-import org.joml.Matrix4d;
 import org.joml.Matrix4f;
-import org.joml.Vector3d;
 import org.joml.Vector3f;
-import org.joml.Vector4d;
 
 /**
  * A fixed camera located at the center of PhotoSphere.
@@ -18,7 +15,6 @@ public class Camera {
 
   private final Vector3f pos;
   private Vector3f target;
-  private final Vector3f yawAxis;
   private final Vector3f pitchAxis;
   private final Vector3f up;
   private final Matrix4f lookAtMat;
@@ -29,7 +25,6 @@ public class Camera {
     pos = new Vector3f(0, 0, 0);
     target = new Vector3f(0, 0, -1);
     up = new Vector3f(0, 1, 0);
-    yawAxis = new Vector3f(0, 1, 0);
     pitchAxis = new Vector3f(1, 0, 0);
     lookAtMat = new Matrix4f();
     updateViewMatrix();
@@ -71,5 +66,13 @@ public class Camera {
     this.pitch += pitch;
     target.rotateAxis(pitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
     up.rotateAxis(pitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
+  }
+
+  public float getYaw() {
+    return yaw;
+  }
+
+  public float getPitch() {
+    return pitch;
   }
 }

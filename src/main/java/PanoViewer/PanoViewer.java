@@ -24,14 +24,14 @@ public class PanoViewer {
   public static void main(String[] args) {
     BufferedImage img;
     try {
-      img = ImageIO.read(IOUtils.getFileFromResource("test.jpg"));
+      img = ImageIO.read(IOUtils.getFileFromResourceAsStream("test.jpg"));
     } catch (IOException ex) {
       Logger.getLogger(PanoViewer.class.getName()).log(Level.SEVERE, null, ex);
       return;
     }
     JFrame jFrame = new JFrame();
     jFrame.setSize(600,600);
-    jFrame.add(new PhotoSphere(img, 200));
+    jFrame.add(new PhotoSphere(img, 180));
     jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     jFrame.setVisible(true);
   }
