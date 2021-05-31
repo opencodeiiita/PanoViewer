@@ -13,21 +13,16 @@ import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
 import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
 import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
 import static com.jogamp.opengl.GL.GL_FLOAT;
-import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
 import static com.jogamp.opengl.GL.GL_LEQUAL;
-import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
 import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 import static com.jogamp.opengl.GL.GL_TEXTURE0;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
-import static com.jogamp.opengl.GL.GL_TEXTURE_MIN_FILTER;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
-import static com.jogamp.opengl.GL2GL3.GL_LINE;
-import com.jogamp.opengl.GL4;
+import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
-import com.jogamp.opengl.util.FPSAnimator;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
@@ -41,7 +36,7 @@ import org.joml.Vector3f;
  */
 public class PhotoSphere extends GLCanvas implements GLEventListener {
 
-  private final Sphere sphere;
+  private final Sphere sphere;//TODO - Unnesesary to store.
   private final int vao[] = new int[1];
   private final int vbo[] = new int[2];
   private int rendering_program;
@@ -66,13 +61,11 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   public PhotoSphere(BufferedImage img, int prec) {
     addGLEventListener(this);
-    this.image = img;
+    image = img;
     instance = this;
     sphere = new Sphere(prec);
     camera = new Camera();
     sphereLoc = new Vector3f(0, 0, 0);
-    FPSAnimator animtr = new FPSAnimator(this, 30);
-    animtr.start();
     listener = new ZoomPanLis() {
       @Override
       void rotate(double yaw, double pitch) {
@@ -111,19 +104,17 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   @Override
   public void dispose(GLAutoDrawable glad) {
+    GL3 gl = (GL3) GLContext.getCurrentGL().getGL3();
   }
 
   @Override
   public void display(GLAutoDrawable glad) {
-
-    GL4 gl = (GL4) GLContext.getCurrentGL();
+    GL3 gl = (GL3) GLContext.getCurrentGL();
     gl.glClear(GL_DEPTH_BUFFER_BIT);
     gl.glClear(GL_COLOR_BUFFER_BIT);
     gl.glUseProgram(rendering_program);
     mvLoc = gl.glGetUniformLocation(rendering_program, "mv_matrix");
     projLoc = gl.glGetUniformLocation(rendering_program, "proj_matrix");
-//    mMat.rotate(500*x, 1000 * x, 0);
-// concatenate model and view matrix to create MV matrix
     pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
 
     mvMat.identity();
@@ -154,7 +145,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   @Override
   public void reshape(GLAutoDrawable glad, int x, int y, int widht, int height) {
     /*http://forum.jogamp.org/canvas-not-filling-frame-td4040092.html#a4040138*/
-    GL4 gl = GLContext.getCurrentGL().getGL4();
+    GL3 gl = GLContext.getCurrentGL().getGL3();
     double dpiScalingFactor = ((Graphics2D) getGraphics()).getTransform().getScaleX();
     widht = (int) (widht * dpiScalingFactor);
     height = (int) (height * dpiScalingFactor);
@@ -162,7 +153,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   }
 
   private void setupVertices() {
-    GL4 gl = GLContext.getCurrentGL().getGL4();
+    GL3 gl = GLContext.getCurrentGL().getGL3();
     numVerts = sphere.getIndices().length;
     int[] indices = sphere.getIndices();
     Vector3f[] vertices = sphere.getVertices();
@@ -190,8 +181,5 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     gl.glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
     FloatBuffer texBuff = Buffers.newDirectFloatBuffer(texValue);
     gl.glBufferData(GL_ARRAY_BUFFER, texBuff.limit() * 4, texBuff, GL_STATIC_DRAW);
-  }
-
-  void rotate(double theta, double phi) {
   }
 }

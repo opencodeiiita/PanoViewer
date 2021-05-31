@@ -25,6 +25,7 @@ import static com.jogamp.opengl.GL2ES2.GL_FRAGMENT_SHADER;
 import static com.jogamp.opengl.GL2ES2.GL_INFO_LOG_LENGTH;
 import static com.jogamp.opengl.GL2ES2.GL_LINK_STATUS;
 import static com.jogamp.opengl.GL2ES2.GL_VERTEX_SHADER;
+import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.glu.GLU;
@@ -55,11 +56,6 @@ public class joglUtils {
     gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     gl.glGenerateMipmap(GL_TEXTURE_2D);
-    if (gl.isExtensionAvailable("GL_EXT_texture_filter_anisotropic")) {
-      float anisoSetting[] = new float[1];
-      gl.glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting, 0);
-      gl.glTextureParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting[0]);
-    }
     gl.glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, // MIPMAP level, color space
             textureImage.getWidth(), textureImage.getHeight(), 0, // image size, border (ignored)
             GL_RGBA, GL_UNSIGNED_BYTE, // pixel format and data type 
@@ -87,7 +83,7 @@ public class joglUtils {
     int[] vertCompiled = new int[1];
     int[] fragCompiled = new int[1];
     int[] linked = new int[1];
-    GL4 gl = (GL4) GLContext.getCurrentGL();
+    GL3 gl = (GL3) GLContext.getCurrentGL();
     String[] vshaderSource = readShaderSource(vFileName);
     String[] fshaderSource = readShaderSource(fFileName);
     int vShader = gl.glCreateShader(GL_VERTEX_SHADER);
@@ -142,7 +138,7 @@ public class joglUtils {
   }
 
   static private void printShaderLog(int shader) {
-    GL4 gl = (GL4) GLContext.getCurrentGL();
+    GL3 gl = (GL3) GLContext.getCurrentGL();
     int[] len = new int[1];
     int[] chWrittn = new int[1];
     byte[] log = null;
@@ -158,7 +154,7 @@ public class joglUtils {
   }
 
   static private void printProgramLog(int program) {
-    GL4 gl = (GL4) GLContext.getCurrentGL();
+    GL3 gl = (GL3) GLContext.getCurrentGL();
     int[] len = new int[1];
     int[] chWrittn = new int[1];
     byte[] log = null;
@@ -174,7 +170,7 @@ public class joglUtils {
   }
 
   static boolean checkOpenGLError() {
-    GL4 g = (GL4) GLContext.getCurrentGL();
+    GL3 g = (GL3) GLContext.getCurrentGL();
     boolean foundError = false;
     GLU glu = new GLU();
     int glErr = g.glGetError();
