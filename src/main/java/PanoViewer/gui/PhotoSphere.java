@@ -5,8 +5,9 @@ package PanoViewer.gui;
 
 import PanoViewer.Camera;
 import static PanoViewer.Utils.joglUtils.createShaderProgram;
-import static PanoViewer.Utils.joglUtils.loadTextureAWT;
+import static PanoViewer.Utils.joglUtils.getTextureData;
 import PanoViewer.math.Sphere;
+import PanoViewer.settings;
 import com.jogamp.common.nio.Buffers;
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
@@ -23,9 +24,12 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureData;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
+import javax.swing.SwingUtilities;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -36,7 +40,6 @@ import org.joml.Vector3f;
  */
 public class PhotoSphere extends GLCanvas implements GLEventListener {
 
-  private final Sphere sphere;//TODO - Unnesesary to store.
   private final int vao[] = new int[1];
   private final int vbo[] = new int[2];
   private int rendering_program;
@@ -48,22 +51,20 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   private final Matrix4f mMat = new Matrix4f();
   private int mvLoc, projLoc;
   private float aspect;
-  private int texId;
-  private final BufferedImage image;
   private final Vector3f sphereLoc;
   private int numVerts;
   private final ZoomPanLis listener;
-  private final PhotoSphere instance;
+  private static PhotoSphere instance;
   private int fov;
   private static final int MAX_FOV = 110;
   private static final int MIN_FOV = 20;
   private static final int IDEAL_FOV = 90;
+  private Texture texture;
+  private TextureData textureData;
+  private boolean updateImage;
 
-  public PhotoSphere(BufferedImage img, int prec) {
+  private PhotoSphere() {
     addGLEventListener(this);
-    image = img;
-    instance = this;
-    sphere = new Sphere(prec);
     camera = new Camera();
     sphereLoc = new Vector3f(0, 0, 0);
     listener = new ZoomPanLis() {
@@ -91,25 +92,47 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     fov = IDEAL_FOV;
   }
 
+  public static PhotoSphere getInstance() {
+    if (instance == null) {
+      instance = new PhotoSphere();
+    }
+    return instance;
+  }
+
+  public void replaceImage(BufferedImage image) {
+    textureData = getTextureData(image);
+    updateImage = true;
+    instance.repaint();
+  }
+
   @Override
   public void init(GLAutoDrawable glad) {
     rendering_program = createShaderProgram("Shaders/vertex.shader", "Shaders/frag.shader");
     setupVertices();
     aspect = (float) getWidth() / (float) getHeight();
     pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
-    texId = loadTextureAWT(image);
     vMat = camera.getViewMatrix();
     mMat.translation(sphereLoc);
+    texture = new Texture(GL_TEXTURE_2D);
   }
 
   @Override
   public void dispose(GLAutoDrawable glad) {
     GL3 gl = (GL3) GLContext.getCurrentGL().getGL3();
+    //TODO
+    gl.glDeleteProgram(rendering_program);
+    gl.glDeleteVertexArrays(vao.length, vao, 0);
+    gl.glDeleteBuffers(vbo.length, vbo, 0);
+    texture.destroy(gl);
   }
 
   @Override
   public void display(GLAutoDrawable glad) {
     GL3 gl = (GL3) GLContext.getCurrentGL();
+    if (updateImage) {
+      texture.updateImage(gl, textureData);
+      updateImage = false;
+    }
     gl.glClear(GL_DEPTH_BUFFER_BIT);
     gl.glClear(GL_COLOR_BUFFER_BIT);
     gl.glUseProgram(rendering_program);
@@ -132,14 +155,15 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     gl.glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
     gl.glEnableVertexAttribArray(1);
 
-    gl.glActiveTexture(GL_TEXTURE0);
-    gl.glGenerateMipmap(GL_TEXTURE_2D);
-    gl.glBindTexture(GL_TEXTURE_2D, texId);
-
     gl.glEnable(GL_DEPTH_TEST);
     gl.glDepthFunc(GL_LEQUAL);
 //    gl.glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    gl.glActiveTexture(GL_TEXTURE0);
+    texture.enable(gl);
+    texture.bind(gl);
     gl.glDrawArrays(GL_TRIANGLES, 0, numVerts);
+    texture.disable(gl);
   }
 
   @Override
@@ -153,6 +177,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   }
 
   private void setupVertices() {
+    Sphere sphere = new Sphere(settings.precision);
     GL3 gl = GLContext.getCurrentGL().getGL3();
     numVerts = sphere.getIndices().length;
     int[] indices = sphere.getIndices();

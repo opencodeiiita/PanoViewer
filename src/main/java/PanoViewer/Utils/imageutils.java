@@ -18,9 +18,7 @@ import java.awt.image.WritableRaster;
  * @author kshan
  */
 public class imageutils {
-
-  public static byte[] getRGBAPixelData(BufferedImage img) {
-    byte[] imgRGBA;
+  public static BufferedImage getFlipedImage(BufferedImage img) {
     int height = img.getHeight(null);
     int width = img.getWidth(null);
     WritableRaster raster
@@ -30,10 +28,8 @@ public class imageutils {
             ColorSpace.getInstance(ColorSpace.CS_sRGB),
             new int[]{8, 8, 8, 8}, true, false, // bits, has Alpha, isAlphaPreMultiplied
             ComponentColorModel.TRANSLUCENT, // transparency
-            DataBuffer.TYPE_BYTE); // data transfer type
+            DataBuffer.TYPE_BYTE);
     BufferedImage newImage = new BufferedImage(colorModel, raster, false, null);
-// use an affine transform to "flip" the image to conform to OpenGL orientation.
-// In Java the origin is at the upper left. In OpenGL the origin is at the lower left.
     AffineTransform gt = new AffineTransform();
     gt.translate(0, height);
     gt.scale(1, -1d);
@@ -41,8 +37,6 @@ public class imageutils {
     g.transform(gt);
     g.drawImage(img, null, null);
     g.dispose();
-    DataBufferByte dataBuf = (DataBufferByte) raster.getDataBuffer();
-    imgRGBA = dataBuf.getData();
-    return imgRGBA;
+    return newImage;
   }
 }

@@ -30,10 +30,11 @@ public class PanoViewer {
       return;
     }
     JFrame jFrame = new JFrame();
-    jFrame.setSize(600,600);
-    jFrame.add(new PhotoSphere(img, 180));
+    jFrame.setSize(600, 600);
+    jFrame.add(PhotoSphere.getInstance());
     jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     jFrame.setVisible(true);
+    PhotoSphere.getInstance().replaceImage(img);
   }
 
 }

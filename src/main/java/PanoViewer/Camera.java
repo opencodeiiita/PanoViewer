@@ -14,7 +14,7 @@ import org.joml.Vector3f;
 public class Camera {
 
   private final Vector3f pos;
-  private Vector3f target;
+  private final Vector3f target;
   private final Vector3f pitchAxis;
   private final Vector3f up;
   private final Matrix4f lookAtMat;
@@ -31,7 +31,7 @@ public class Camera {
   }
 
   public void changeTarget(Vector3f target) {
-    this.target = target;
+    this.target.set(target);
     updateViewMatrix();
   }
 

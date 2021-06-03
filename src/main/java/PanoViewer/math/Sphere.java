@@ -46,6 +46,9 @@ public class Sphere {
         float x = -(float) cos(j * sectorAngle) * (float) abs(sin(theta));
         float z = (float) sin(j * sectorAngle) * (float) abs(sin(theta));
         vertices[i * (horizontalP + 1) + j].set(x, y, z);
+        /*
+        **Horizontal inversion because images are viewed from inside.
+        */ 
         texCoords[i * (horizontalP + 1) + j].set(1 - (float) j / horizontalP, (float) i / verticalP);
       }
     }
