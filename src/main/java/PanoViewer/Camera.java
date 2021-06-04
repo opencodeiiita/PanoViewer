@@ -7,19 +7,27 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 /**
- * A fixed camera located at the center of PhotoSphere.
+ * A fixed camera located at the (0,0,0,).
  *
  * @author kshan
  */
 public class Camera {
 
+  /*Position of Camera */
   private final Vector3f pos;
+  /* Camera target which stays on a sphere of radius 1. */
   private final Vector3f target;
+  /* Pitch axis of camera. Initialy Poniting towards +ve X axis. */
   private final Vector3f pitchAxis;
+  /* Yaw axis of camera and up vector for calculating perspective matrix. 
+   Initialy towards +ve Y axis.*/
   private final Vector3f up;
+  /* Perspective matrix generated from this camera's orientation. */
   private final Matrix4f lookAtMat;
-  private float yaw = 0;
-  private float pitch = 0;
+  /* Yaw of this camera. Value should be between 0 and 2*pi. */
+  private double yaw = 0;
+  /* Pitch of this camera. Value should be between -pi/2 and pi/2. */
+  private double pitch = 0;
 
   public Camera() {
     pos = new Vector3f(0, 0, 0);
@@ -30,8 +38,8 @@ public class Camera {
     updateViewMatrix();
   }
 
-  public void changeTarget(Vector3f target) {
-    this.target.set(target);
+  public void changeTarget(Vector3f newTarget) {
+    target.set(newTarget);
     updateViewMatrix();
   }
 
@@ -49,30 +57,31 @@ public class Camera {
     updateViewMatrix();
   }
 
-  private void rotateY(float yaw) {
-    this.yaw += yaw;
-    target.rotateY(yaw);
-    up.rotateY(yaw);
-    pitchAxis.rotateY(yaw);
+  private void rotateY(float deltaYaw) {
+    target.rotateY(deltaYaw);
+    up.rotateY(deltaYaw);
+    pitchAxis.rotateY(deltaYaw);
+    yaw += deltaYaw;
+    yaw = yaw > 2 * Math.PI ? yaw - 2 * Math.PI : yaw < 0 ? yaw + 2 * Math.PI : yaw;
   }
 
-  private void rotateX(float pitch) {
-    if (this.pitch + pitch > Math.PI / 2) {
-      pitch = (float) (Math.PI / 2 - this.pitch);
+  private void rotateX(float deltaPitch) {
+    if (pitch + deltaPitch > Math.PI / 2) {
+      deltaPitch = (float) (Math.PI / 2 - pitch);
     }
-    if (this.pitch + pitch < -Math.PI / 2) {
-      pitch = (float) (-Math.PI / 2 - this.pitch);
+    if (pitch + deltaPitch < -Math.PI / 2) {
+      deltaPitch = (float) (-Math.PI / 2 - pitch);
     }
-    this.pitch += pitch;
-    target.rotateAxis(pitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
-    up.rotateAxis(pitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
+    pitch += deltaPitch;
+    target.rotateAxis(deltaPitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
+    up.rotateAxis(deltaPitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
   }
 
-  public float getYaw() {
+  public double getYaw() {
     return yaw;
   }
 
-  public float getPitch() {
+  public double getPitch() {
     return pitch;
   }
 }
