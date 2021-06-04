@@ -43,8 +43,8 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   private int rendering_program;
   private final Camera camera;
   private final FloatBuffer vals = Buffers.newDirectFloatBuffer(16);
-  private Matrix4f pMat = new Matrix4f();
-  private Matrix4f vMat = new Matrix4f();
+  private final Matrix4f pMat = new Matrix4f();
+  private final Matrix4f vMat = new Matrix4f();
   private final Matrix4f mvMat = new Matrix4f();
   private final Matrix4f mMat = new Matrix4f();
   private int mvLoc, projLoc;
@@ -97,7 +97,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     setupVertices(glad.getGL().getGL4());
     aspect = (float) getWidth() / (float) getHeight();
     pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
-    vMat = camera.getViewMatrix();
+    vMat.set(camera.getViewMatrix());
     mMat.translation(sphereLoc);
     texture = new Texture(GL_TEXTURE_2D);
   }
@@ -141,7 +141,6 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
     gl.glEnable(GL_DEPTH_TEST);
     gl.glDepthFunc(GL_LEQUAL);
-//    gl.glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     gl.glActiveTexture(GL_TEXTURE0);
     texture.enable(gl);
@@ -205,11 +204,16 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     this.removeMouseWheelListener(listener);
   }
 
+  /**
+   * Rotates the camera.
+   * @param yaw Yaw angle in radian.
+   * @param pitch Pitch angle in radian.
+   */
   public void rotateCamera(double yaw, double pitch) {
     float newYaw = (float) (yaw * fov / IDEAL_FOV);
     float newPitch = (float) (pitch * fov / IDEAL_FOV);
     camera.rotate(newYaw, newPitch);
-    vMat = camera.getViewMatrix();
+    vMat.set(camera.getViewMatrix());
     repaint();
   }
 
