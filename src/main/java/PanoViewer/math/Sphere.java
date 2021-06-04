@@ -14,7 +14,7 @@ import org.joml.Vector3f;
  */
 public class Sphere {
 
-  private int numVertices, numIndices, horizontalP; // prec = precision
+  private int numVertices, numIndices, horizontalP;
   private int[] indices;
   private Vector3f[] vertices;
   private Vector2f[] texCoords;

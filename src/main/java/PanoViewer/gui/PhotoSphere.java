@@ -19,9 +19,8 @@ import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 import static com.jogamp.opengl.GL.GL_TEXTURE0;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
-import com.jogamp.opengl.GL3;
+import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.texture.Texture;
@@ -85,9 +84,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
         instance.repaint();
       }
     };
-    this.addMouseListener(listener);
-    this.addMouseMotionListener(listener);
-    this.addMouseWheelListener(listener);
+    enableZoomPan();
     fov = IDEAL_FOV;
   }
 
@@ -98,13 +95,18 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     return instance;
   }
 
+  public static void destroyInstance() {
+    instance.destroy();
+    instance = null;
+  }
+
   public void replaceImage(BufferedImage image) {
     textureData = getTextureData(image);
     updateImage = true;
     instance.repaint();
   }
 
-  private void replaceTextureData(GL3 gl) {
+  private void replaceTextureData(GL4 gl) {
     texture.updateImage(gl, textureData);
     textureData = null;
     updateImage = false;
@@ -113,7 +115,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   @Override
   public void init(GLAutoDrawable glad) {
     rendering_program = createShaderProgram("Shaders/vertex.shader", "Shaders/frag.shader");
-    setupVertices();
+    setupVertices(glad.getGL().getGL4());
     aspect = (float) getWidth() / (float) getHeight();
     pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
     vMat = camera.getViewMatrix();
@@ -123,7 +125,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   @Override
   public void dispose(GLAutoDrawable glad) {
-    GL3 gl = (GL3) GLContext.getCurrentGL().getGL3();
+    GL4 gl = glad.getGL().getGL4();
     gl.glDeleteProgram(rendering_program);
     gl.glDeleteVertexArrays(vao.length, vao, 0);
     gl.glDeleteBuffers(vbo.length, vbo, 0);
@@ -132,7 +134,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   @Override
   public void display(GLAutoDrawable glad) {
-    GL3 gl = (GL3) GLContext.getCurrentGL();
+    GL4 gl = glad.getGL().getGL4();
     if (updateImage) {
       replaceTextureData(gl);
     }
@@ -172,7 +174,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   @Override
   public void reshape(GLAutoDrawable glad, int x, int y, int widht, int height) {
     /*http://forum.jogamp.org/canvas-not-filling-frame-td4040092.html#a4040138*/
-    GL3 gl = GLContext.getCurrentGL().getGL3();
+    GL4 gl = glad.getGL().getGL4();
     double dpiScalingFactor = ((Graphics2D) getGraphics()).getTransform().getScaleX();
     widht = (int) (widht * dpiScalingFactor);
     height = (int) (height * dpiScalingFactor);
@@ -181,9 +183,8 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
   }
 
-  private void setupVertices() {
+  private void setupVertices(GL4 gl) {
     Sphere sphere = new Sphere(getPrecision());
-    GL3 gl = GLContext.getCurrentGL().getGL3();
     numVerts = sphere.getIndices().length;
     int[] indices = sphere.getIndices();
     Vector3f[] vertices = sphere.getVertices();
@@ -211,5 +212,17 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     gl.glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
     FloatBuffer texBuff = Buffers.newDirectFloatBuffer(texValue);
     gl.glBufferData(GL_ARRAY_BUFFER, texBuff.limit() * 4, texBuff, GL_STATIC_DRAW);
+  }
+
+  private void enableZoomPan() {
+    this.addMouseListener(listener);
+    this.addMouseMotionListener(listener);
+    this.addMouseWheelListener(listener);
+  }
+
+  private void disableZoomPan() {
+    this.removeMouseListener(listener);
+    this.removeMouseMotionListener(listener);
+    this.removeMouseWheelListener(listener);
   }
 }

@@ -4,17 +4,15 @@
 package PanoViewer.gui;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import static PanoViewer.settings.*;
+import java.awt.event.MouseAdapter;
 
 /**
  *
  * @author kshan
  */
-public abstract class ZoomPanLis implements MouseListener, MouseMotionListener, MouseWheelListener {
+public abstract class ZoomPanLis extends MouseAdapter {
 
   private int lastX;
   private int lastY;

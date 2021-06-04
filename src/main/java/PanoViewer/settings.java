@@ -37,7 +37,7 @@ public class settings {
   }
 
   public static boolean checkMinimumVersion() {
-    return GLProfile.isAvailable(GLProfile.GL3);
+    return GLProfile.isAvailable(GLProfile.GL4);
   }
 
   public static float getDragSenstivity() {
