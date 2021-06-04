@@ -5,7 +5,6 @@ package PanoViewer.Utils;
 
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
 import static PanoViewer.Utils.imageutils.getFlipedImage;
-import PanoViewer.settings;
 import static PanoViewer.settings.invertImage;
 import static com.jogamp.opengl.GL.GL_NO_ERROR;
 import static com.jogamp.opengl.GL2ES2.GL_COMPILE_STATUS;
@@ -23,8 +22,6 @@ import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 import java.util.Vector;
-import java.util.logging.Level;
-import jdk.jfr.internal.Logger;
 
 /**
  *
