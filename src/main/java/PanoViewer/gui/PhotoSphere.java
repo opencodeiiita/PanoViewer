@@ -52,7 +52,6 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   private final Vector3f sphereLoc;
   private int numVerts;
   private final ZoomPanLis listener;
-  private static PhotoSphere instance;
   private int fov;
   private static final int MAX_FOV = 110;
   private static final int MIN_FOV = 20;
@@ -61,49 +60,29 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   private TextureData textureData;
   private boolean updateImage;
 
-  private PhotoSphere() {
+  public PhotoSphere() {
     addGLEventListener(this);
     camera = new Camera();
     sphereLoc = new Vector3f(0, 0, 0);
     listener = new ZoomPanLis() {
       @Override
       void rotate(double yaw, double pitch) {
-        float newYaw = (float) (yaw * fov / IDEAL_FOV);
-        float newPitch = (float) (pitch * fov / IDEAL_FOV);
-        camera.rotate(newYaw, newPitch);
-        vMat = camera.getViewMatrix();
-        instance.repaint();
+        rotateCamera(yaw, pitch);
       }
 
       @Override
       void zoom(int zoomAmount) {
-        fov += zoomAmount;
-        fov = Math.min(fov, MAX_FOV);
-        fov = Math.max(fov, MIN_FOV);
-        pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
-        instance.repaint();
+        zoomCamera(zoomAmount);
       }
     };
     enableZoomPan();
     fov = IDEAL_FOV;
   }
 
-  public static PhotoSphere getInstance() {
-    if (instance == null) {
-      instance = new PhotoSphere();
-    }
-    return instance;
-  }
-
-  public static void destroyInstance() {
-    instance.destroy();
-    instance = null;
-  }
-
   public void replaceImage(BufferedImage image) {
     textureData = getTextureData(image);
     updateImage = true;
-    instance.repaint();
+    repaint();
   }
 
   private void replaceTextureData(GL4 gl) {
@@ -224,5 +203,21 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     this.removeMouseListener(listener);
     this.removeMouseMotionListener(listener);
     this.removeMouseWheelListener(listener);
+  }
+
+  public void rotateCamera(double yaw, double pitch) {
+    float newYaw = (float) (yaw * fov / IDEAL_FOV);
+    float newPitch = (float) (pitch * fov / IDEAL_FOV);
+    camera.rotate(newYaw, newPitch);
+    vMat = camera.getViewMatrix();
+    repaint();
+  }
+
+  private void zoomCamera(int zoomAmount) {
+    fov += zoomAmount;
+    fov = Math.min(fov, MAX_FOV);
+    fov = Math.max(fov, MIN_FOV);
+    pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
+    repaint();
   }
 }
