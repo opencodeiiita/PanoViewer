@@ -11,13 +11,14 @@ import com.jogamp.opengl.GLProfile;
  */
 public class settings {
 
-  public static float dragSenstivity = 1f;
-  public static int wheelSenstivity = 5;
-  public static int precision = 90;
+  private static float dragSenstivity = 1f;
+  private static int wheelSenstivity = 5;
+  private static int precision = 90;
   private static GLProfile gl;
   private static boolean invertImage;
 
-  private settings() {}
+  private settings() {
+  }
 
   static {
     gl = GLProfile.getMaxProgrammable(true);
@@ -30,11 +31,36 @@ public class settings {
   public static boolean invertImage() {
     return invertImage;
   }
+
   static GLProfile getMaxProfile() {
     return gl;
   }
 
-  static boolean checkMinimumVersion() {
+  public static boolean checkMinimumVersion() {
     return GLProfile.isAvailable(GLProfile.GL3);
+  }
+
+  public static float getDragSenstivity() {
+    return dragSenstivity;
+  }
+
+  public static void setDragSenstivity(float newSensi) {
+    dragSenstivity = newSensi;
+  }
+
+  public static int getWheelSenstivity() {
+    return wheelSenstivity;
+  }
+
+  public static void setWheelSenstivity(int newSensi) {
+    wheelSenstivity = newSensi;
+  }
+
+  public static int getPrecision() {
+    return precision;
+  }
+
+  public static void setPrecision(int newPrecision) {
+    precision = newPrecision;
   }
 }

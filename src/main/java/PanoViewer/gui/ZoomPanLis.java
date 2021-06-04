@@ -8,8 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import static PanoViewer.settings.dragSenstivity;
-import static PanoViewer.settings.wheelSenstivity;
+import static PanoViewer.settings.*;
 
 /**
  *
@@ -51,8 +50,8 @@ public abstract class ZoomPanLis implements MouseListener, MouseMotionListener, 
     int newY = e.getY();
     int width = e.getComponent().getWidth();
     int height = e.getComponent().getHeight();
-    double yaw = Math.PI * (newX -lastX ) / width * dragSenstivity;
-    double pitch = Math.PI * (lastY - newY) / height * dragSenstivity;
+    double yaw = Math.PI * (newX -lastX ) / width * getDragSenstivity();
+    double pitch = Math.PI * (lastY - newY) / height * getDragSenstivity();
     rotate(yaw, pitch);
     lastX = newX;
     lastY = newY;
@@ -66,7 +65,7 @@ public abstract class ZoomPanLis implements MouseListener, MouseMotionListener, 
 
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
-    zoom(e.getWheelRotation()* wheelSenstivity);
+    zoom(e.getWheelRotation()* getWheelSenstivity());
   }
 
   abstract void zoom(int zoomAmount);

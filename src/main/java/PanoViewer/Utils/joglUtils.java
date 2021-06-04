@@ -23,6 +23,8 @@ import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.logging.Level;
+import jdk.jfr.internal.Logger;
 
 /**
  *
@@ -68,10 +70,8 @@ public class joglUtils {
     gl.glCompileShader(vShader);
     checkOpenGLError(); // can use returned boolean
     gl.glGetShaderiv(vShader, GL_COMPILE_STATUS, vertCompiled, 0);
-    if (vertCompiled[0] == 1) {
-      System.out.println("vShader vertex compilation success.");
-    } else {
-      System.out.println("vShader vertex compilation failed.");
+    if (vertCompiled[0] != 1) {
+      System.out.println(vFileName + " vertex compilation failed.");
       printShaderLog(vShader);
     }
 
@@ -80,10 +80,8 @@ public class joglUtils {
     gl.glCompileShader(fShader);
     checkOpenGLError(); // can use returned boolean
     gl.glGetShaderiv(fShader, GL_COMPILE_STATUS, fragCompiled, 0);
-    if (fragCompiled[0] == 1) {
-      System.out.println("fShader fragment compilation success.");
-    } else {
-      System.out.println("fShader fragment compilation failed.");
+    if (fragCompiled[0] != 1) {
+      System.out.println(fFileName + " fragment compilation failed.");
       printShaderLog(fShader);
     }
 
@@ -91,8 +89,6 @@ public class joglUtils {
       System.out.println("\nCompilation error; return-flags:");
       System.out.println(" vertCompiled = " + vertCompiled[0]
               + "fragCompiled =  " + fragCompiled[0]);
-    } else {
-      System.out.println("Successful compilation");
     }
 
     int vfprogram = gl.glCreateProgram();
@@ -102,9 +98,7 @@ public class joglUtils {
 
     checkOpenGLError();
     gl.glGetProgramiv(vfprogram, GL_LINK_STATUS, linked, 0);
-    if (linked[0] == 1) {
-      System.out.println("vfprogram linking succeeded.");
-    } else {
+    if (linked[0] != 1) {
       System.out.println("vfprogram linking failed.");
       printProgramLog(vfprogram);
     }

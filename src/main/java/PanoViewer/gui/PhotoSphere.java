@@ -7,7 +7,7 @@ import PanoViewer.Camera;
 import static PanoViewer.Utils.joglUtils.createShaderProgram;
 import static PanoViewer.Utils.joglUtils.getTextureData;
 import PanoViewer.math.Sphere;
-import PanoViewer.settings;
+import static PanoViewer.settings.*;
 import com.jogamp.common.nio.Buffers;
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
@@ -124,7 +124,6 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   @Override
   public void dispose(GLAutoDrawable glad) {
     GL3 gl = (GL3) GLContext.getCurrentGL().getGL3();
-    //TODO
     gl.glDeleteProgram(rendering_program);
     gl.glDeleteVertexArrays(vao.length, vao, 0);
     gl.glDeleteBuffers(vbo.length, vbo, 0);
@@ -183,7 +182,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   }
 
   private void setupVertices() {
-    Sphere sphere = new Sphere(settings.precision);
+    Sphere sphere = new Sphere(getPrecision());
     GL3 gl = GLContext.getCurrentGL().getGL3();
     numVerts = sphere.getIndices().length;
     int[] indices = sphere.getIndices();
