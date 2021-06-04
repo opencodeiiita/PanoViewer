@@ -36,5 +36,4 @@ public class PanoViewer {
     jFrame.setVisible(true);
     PhotoSphere.getInstance().replaceImage(img);
   }
-
 }

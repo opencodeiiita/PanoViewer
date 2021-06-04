@@ -26,13 +26,17 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureData;
+import com.sun.tools.javac.util.ByteBuffer;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import javax.swing.SwingUtilities;
+import jdk.internal.org.jline.reader.Buffer;
+import jdk.internal.ref.Cleaner;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import sun.nio.ch.DirectBuffer;
 
 /**
  *
@@ -105,12 +109,18 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     instance.repaint();
   }
 
+  private void replaceTextureData(GL3 gl) {
+    texture.updateImage(gl, textureData);
+    textureData = null;
+    updateImage = false;
+  }
+
   @Override
   public void init(GLAutoDrawable glad) {
     rendering_program = createShaderProgram("Shaders/vertex.shader", "Shaders/frag.shader");
     setupVertices();
     aspect = (float) getWidth() / (float) getHeight();
-    pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
+    pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
     vMat = camera.getViewMatrix();
     mMat.translation(sphereLoc);
     texture = new Texture(GL_TEXTURE_2D);
@@ -130,8 +140,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
   public void display(GLAutoDrawable glad) {
     GL3 gl = (GL3) GLContext.getCurrentGL();
     if (updateImage) {
-      texture.updateImage(gl, textureData);
-      updateImage = false;
+      replaceTextureData(gl);
     }
     gl.glClear(GL_DEPTH_BUFFER_BIT);
     gl.glClear(GL_COLOR_BUFFER_BIT);
@@ -174,6 +183,8 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     widht = (int) (widht * dpiScalingFactor);
     height = (int) (height * dpiScalingFactor);
     gl.glViewport(0, 0, widht, height);
+    aspect = (float) getWidth() / (float) getHeight();
+    pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
   }
 
   private void setupVertices() {
