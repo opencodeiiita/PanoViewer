@@ -29,14 +29,13 @@ import com.jogamp.opengl.util.texture.TextureData;
 import com.sun.tools.javac.util.ByteBuffer;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import javax.swing.SwingUtilities;
-import jdk.internal.org.jline.reader.Buffer;
 import jdk.internal.ref.Cleaner;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import sun.nio.ch.DirectBuffer;
 
 /**
  *

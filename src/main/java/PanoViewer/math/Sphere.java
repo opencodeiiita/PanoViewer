@@ -3,6 +3,7 @@
  */
 package PanoViewer.math;
 
+import static PanoViewer.settings.invertImage;
 import java.awt.geom.Point2D;
 import static java.lang.Math.*;
 import org.joml.Vector2f;
@@ -41,15 +42,18 @@ public class Sphere {
 // calculate triangle vertices
     for (int i = 0; i <= verticalP; i++) {
       double theta = Math.PI - i * sliceAngle;
-        float y = (float) cos(Math.PI - i * sliceAngle);
+      float y = (float) cos(Math.PI - i * sliceAngle);
       for (int j = 0; j <= horizontalP; j++) {
         float x = -(float) cos(j * sectorAngle) * (float) abs(sin(theta));
         float z = (float) sin(j * sectorAngle) * (float) abs(sin(theta));
         vertices[i * (horizontalP + 1) + j].set(x, y, z);
         /*
-        **Horizontal inversion because images are viewed from inside.
-        */ 
-        texCoords[i * (horizontalP + 1) + j].set(1 - (float) j / horizontalP, (float) i / verticalP);
+         * Horizontal inversion because images are viewed from inside. Vertical Inversion 
+         * if texture image is not flipped.
+         */
+        x = 1 - (float) j / horizontalP;
+        z = invertImage() ? ((float) i / verticalP) : (1 - (float) i / verticalP);
+        texCoords[i * (horizontalP + 1) + j].set(x, z);
       }
     }
 // calculate triangle indices

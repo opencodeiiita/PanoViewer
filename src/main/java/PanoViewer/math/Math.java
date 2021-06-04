@@ -9,6 +9,5 @@ import org.joml.Matrix3f;
  *
  * @author kshan
  */
-public class Math3D {
-
+public class Math {
 }

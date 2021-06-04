@@ -3,30 +3,17 @@
  */
 package PanoViewer.Utils;
 
-import static PanoViewer.Utils.IOUtils.getBufferedImage;
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
 import static PanoViewer.Utils.imageutils.getFlipedImage;
-import com.jogamp.common.nio.Buffers;
-import static com.jogamp.opengl.GL.GL_LINEAR;
-import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
-import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_NEAREST;
-import static com.jogamp.opengl.GL.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
-import static com.jogamp.opengl.GL.GL_NEAREST;
-import static com.jogamp.opengl.GL.GL_NEAREST_MIPMAP_NEAREST;
+import PanoViewer.settings;
+import static PanoViewer.settings.invertImage;
 import static com.jogamp.opengl.GL.GL_NO_ERROR;
-import static com.jogamp.opengl.GL.GL_RGBA;
-import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
-import static com.jogamp.opengl.GL.GL_TEXTURE_MAG_FILTER;
-import static com.jogamp.opengl.GL.GL_TEXTURE_MAX_ANISOTROPY_EXT;
-import static com.jogamp.opengl.GL.GL_TEXTURE_MIN_FILTER;
-import static com.jogamp.opengl.GL.GL_UNSIGNED_BYTE;
 import static com.jogamp.opengl.GL2ES2.GL_COMPILE_STATUS;
 import static com.jogamp.opengl.GL2ES2.GL_FRAGMENT_SHADER;
 import static com.jogamp.opengl.GL2ES2.GL_INFO_LOG_LENGTH;
 import static com.jogamp.opengl.GL2ES2.GL_LINK_STATUS;
 import static com.jogamp.opengl.GL2ES2.GL_VERTEX_SHADER;
 import com.jogamp.opengl.GL3;
-import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.glu.GLU;
@@ -34,7 +21,6 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import java.awt.image.BufferedImage;
-import java.nio.ByteBuffer;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -51,7 +37,7 @@ public class joglUtils {
 
   public static TextureData getTextureData(BufferedImage image) {
     TextureData textureData = AWTTextureIO.newTextureData(GLProfile.getMaxProgrammable(true),
-            getFlipedImage(image), true);
+            invertImage() ? getFlipedImage(image) : image, true);
     return textureData;
   }
 
