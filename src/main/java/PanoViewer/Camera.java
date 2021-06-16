@@ -84,4 +84,13 @@ public class Camera {
   public double getPitch() {
     return pitch;
   }
+
+  public void reset() {
+    yaw = 0;
+    pitch = 0;
+    target.set(0, 0, -1);
+    up.set(0, 1, 0);
+    pitchAxis.set(1, 0, 0);
+    updateViewMatrix();
+  }
 }

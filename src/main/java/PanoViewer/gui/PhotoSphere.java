@@ -83,12 +83,11 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     textureData = getTextureData(image);
     updateImage = true;
     repaint();
+    camera.reset();
   }
 
   private void replaceTextureData(GL4 gl) {
     texture.updateImage(gl, textureData);
-    textureData = null;
-    updateImage = false;
   }
 
   @Override
