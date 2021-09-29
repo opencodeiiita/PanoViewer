@@ -33,7 +33,7 @@ public class PanoViewer {
       Logger.getLogger(PanoViewer.class.getName()).log(Level.SEVERE, null, ex);
       return;
     }
-    JFrame jFrame = new JFrame();
+    JFrame jFrame = new JFrame("PanoViewer");
     jFrame.setSize(600, 600);
     PhotoSphere ps = new PhotoSphere();
     jFrame.add(ps);
