@@ -4,7 +4,7 @@ If you want to explore the sourcecode and maybe even improve it, first of all a 
 
 ```shell
 git clone https://github.com/GhostFoxSledgehammer/PanoViewer.git
-cd Mapillary
+cd PanoViewer
 ```
 
 ## Building the plugin with Gradle
