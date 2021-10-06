@@ -16,8 +16,8 @@ public class Menu extends JMenuBar {
         Open = new JMenuItem("Open");
         Exit = new JMenuItem("Exit");
         About = new JMenuItem("About");
-        instance.add(File);
-        instance.add(Help);
+        add(File);
+        add(Help);
         File.add(Open);
         File.add(Exit);
         Help.add(About);
