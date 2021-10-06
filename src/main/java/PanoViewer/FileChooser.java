@@ -26,7 +26,6 @@ public class FileChooser {
         fileChooser.setFileFilter(fileFilter);
         File file = new File(dir);
         fileChooser.setCurrentDirectory(file);
-        fileChooser.showOpenDialog(null);
         return fileChooser;
     }
 }
