@@ -9,16 +9,16 @@ import com.jogamp.opengl.GLProfile;
  *
  * @author kshan
  */
-public class settings {
+public class Settings {
 
-  private static float dragSenstivity = 1f;
-  private static int wheelSenstivity = 5;
+  private static float dragSensitivity = 1f;
+  private static int wheelSensitivity = 5;
   private static int precision = 90;
   private static GLProfile gl;
   /* Whether or not to flip the image when creating texture data. */
   private static boolean invertImage;
 
-  private settings() {
+  private Settings() {
   }
 
   static {
@@ -41,20 +41,20 @@ public class settings {
     return GLProfile.isAvailable(GLProfile.GL4);
   }
 
-  public static float getDragSenstivity() {
-    return dragSenstivity;
+  public static float getDragSensitivity() {
+    return dragSensitivity;
   }
 
-  public static void setDragSenstivity(float newSensi) {
-    dragSenstivity = newSensi;
+  public static void setDragSensitivity(float newSensi) {
+    dragSensitivity = newSensi;
   }
 
-  public static int getWheelSenstivity() {
-    return wheelSenstivity;
+  public static int getWheelSensitivity() {
+    return wheelSensitivity;
   }
 
-  public static void setWheelSenstivity(int newSensi) {
-    wheelSenstivity = newSensi;
+  public static void setWheelSensitivity(int newSensi) {
+    wheelSensitivity = newSensi;
   }
 
   public static int getPrecision() {

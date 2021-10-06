@@ -5,7 +5,7 @@ package PanoViewer.gui;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import static PanoViewer.settings.*;
+import static PanoViewer.Settings.*;
 import java.awt.event.MouseAdapter;
 
 /**
@@ -48,8 +48,8 @@ public abstract class ZoomPanLis extends MouseAdapter {
     int newY = e.getY();
     int width = e.getComponent().getWidth();
     int height = e.getComponent().getHeight();
-    double yaw = Math.PI * (newX -lastX ) / width * getDragSenstivity();
-    double pitch = Math.PI * (lastY - newY) / height * getDragSenstivity();
+    double yaw = Math.PI * (newX -lastX ) / width * getDragSensitivity();
+    double pitch = Math.PI * (lastY - newY) / height * getDragSensitivity();
     rotate(yaw, pitch);
     lastX = newX;
     lastY = newY;
@@ -63,7 +63,7 @@ public abstract class ZoomPanLis extends MouseAdapter {
 
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
-    zoom(e.getWheelRotation()* getWheelSenstivity());
+    zoom(e.getWheelRotation()* getWheelSensitivity());
   }
 
   abstract void zoom(int zoomAmount);

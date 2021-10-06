@@ -17,10 +17,10 @@ public class Camera {
   private final Vector3f pos;
   /* Camera target which stays on a sphere of radius 1. */
   private final Vector3f target;
-  /* Pitch axis of camera. Initialy Poniting towards +ve X axis. */
+  /* Pitch axis of camera. Initially Pointing towards +ve X axis. */
   private final Vector3f pitchAxis;
   /* Yaw axis of camera and up vector for calculating perspective matrix. 
-   Initialy towards +ve Y axis.*/
+   Initially towards +ve Y axis.*/
   private final Vector3f up;
   /* Perspective matrix generated from this camera's orientation. */
   private final Matrix4f lookAtMat;
