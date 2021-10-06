@@ -17,12 +17,12 @@ public class FileChooser {
     private FileChooser() {
         String dir = System.getProperty("user.dir");
         fileChooser = new JFileChooser(dir);
-    }
-
-    public JFileChooser chooser() {
         FileFilter fileFilter = new FileNameExtensionFilter("Images Files", ImageIO.getReaderFileSuffixes());
         fileChooser.addChoosableFileFilter(fileFilter);
         fileChooser.setFileFilter(fileFilter);
+    }
+
+    public JFileChooser chooser() {
         return fileChooser;
     }
 }
