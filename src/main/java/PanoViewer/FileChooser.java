@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
 
 public class FileChooser {
 
@@ -14,18 +13,17 @@ public class FileChooser {
         return instance;
     }
 
-    private FileChooser() {
+    private JFileChooser fileChooser;
 
+    private FileChooser() {
+        String dir = System.getProperty("user.dir");
+        fileChooser = new JFileChooser(dir);
     }
 
     public JFileChooser chooser() {
-        JFileChooser fileChooser = new JFileChooser();
-        String dir = System.getProperty("user.dir");
         FileFilter fileFilter = new FileNameExtensionFilter("Images Files", ImageIO.getReaderFileSuffixes());
         fileChooser.addChoosableFileFilter(fileFilter);
         fileChooser.setFileFilter(fileFilter);
-        File file = new File(dir);
-        fileChooser.setCurrentDirectory(file);
         return fileChooser;
     }
 }
