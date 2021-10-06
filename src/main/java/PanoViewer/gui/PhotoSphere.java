@@ -7,7 +7,7 @@ import PanoViewer.Camera;
 import static PanoViewer.Utils.joglUtils.createShaderProgram;
 import static PanoViewer.Utils.joglUtils.getTextureData;
 import PanoViewer.math.Sphere;
-import static PanoViewer.settings.*;
+import static PanoViewer.Settings.*;
 import com.jogamp.common.nio.Buffers;
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
@@ -38,8 +38,8 @@ import org.joml.Vector3f;
  */
 public class PhotoSphere extends GLCanvas implements GLEventListener {
 
-  private final int vao[] = new int[1];
-  private final int vbo[] = new int[2];
+  private final int[] vao = new int[1];
+  private final int[] vbo = new int[2];
   private int rendering_program;
   private final Camera camera;
   private final FloatBuffer vals = Buffers.newDirectFloatBuffer(16);
@@ -184,11 +184,11 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
     gl.glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
     FloatBuffer vertBuffer = Buffers.newDirectFloatBuffer(points);
-    gl.glBufferData(GL_ARRAY_BUFFER, vertBuffer.limit() * 4, vertBuffer, GL_STATIC_DRAW);
+    gl.glBufferData(GL_ARRAY_BUFFER, vertBuffer.limit() * 4L, vertBuffer, GL_STATIC_DRAW);
 
     gl.glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
     FloatBuffer texBuff = Buffers.newDirectFloatBuffer(texValue);
-    gl.glBufferData(GL_ARRAY_BUFFER, texBuff.limit() * 4, texBuff, GL_STATIC_DRAW);
+    gl.glBufferData(GL_ARRAY_BUFFER, texBuff.limit() * 4L, texBuff, GL_STATIC_DRAW);
   }
 
   private void enableZoomPan() {

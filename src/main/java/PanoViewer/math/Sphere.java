@@ -3,7 +3,7 @@
  */
 package PanoViewer.math;
 
-import static PanoViewer.settings.invertImage;
+import static PanoViewer.Settings.invertImage;
 import static java.lang.Math.*;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
