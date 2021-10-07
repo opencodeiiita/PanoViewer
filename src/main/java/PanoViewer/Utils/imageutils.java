@@ -17,6 +17,11 @@ import java.awt.image.WritableRaster;
  * @author kshan
  */
 public class imageutils {
+
+  private imageutils() {
+    // Ctor.
+  }
+
   public static BufferedImage getFlipedImage(BufferedImage img) {
     int height = img.getHeight(null);
     int width = img.getWidth(null);
@@ -37,5 +42,15 @@ public class imageutils {
     g.drawImage(img, null, null);
     g.dispose();
     return newImage;
+  }
+  
+  public static Boolean isRatio(BufferedImage img) {
+    int height = img.getHeight(null);
+    int width = img.getWidth(null);
+    Boolean isTwoIsToOne = (width == 2*height);
+    if(isTwoIsToOne) {
+      return true;
+    }
+    return false; 
   }
 }
