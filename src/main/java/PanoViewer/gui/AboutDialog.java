@@ -13,6 +13,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
+import static PanoViewer.Utils.imageutils.open;
+import static PanoViewer.Utils.imageutils.scaleImage;
 
 /*
 @author-Bipul Kumar
@@ -61,39 +63,9 @@ public class AboutDialog extends JPanel {
     setBackground(Color.LIGHT_GRAY);
   }
 
-  public ImageIcon scaleImage(ImageIcon icon, int w, int h) {
-    int nw = icon.getIconWidth();
-    int nh = icon.getIconHeight();
-    if (icon.getIconWidth() > w) {
-      nw = w;
-      nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
-    }
-    if (nh > h) {
-      nh = h;
-      nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
-    }
 
-    return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
-  }
 
-  /*
-  URL opener
-   */
-  private static void open(URI url) {
-    if (Desktop.isDesktopSupported()) {
-      Desktop desktop = Desktop.getDesktop();
-      try {
-        desktop.browse(url);
-      } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Failed to launch the link, " + "your computer is likely misconfigured ." + "Cannot Open Link " + JOptionPane.WARNING_MESSAGE);
-      }
-    } else {
-      JOptionPane.showMessageDialog(null,
-              "Java is not able to launch links on your computer.",
-              "Cannot Launch Link", JOptionPane.WARNING_MESSAGE);
 
-    }
-  }
 
   /*
   Getter Method

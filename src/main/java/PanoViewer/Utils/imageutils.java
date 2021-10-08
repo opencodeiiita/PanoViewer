@@ -1,6 +1,7 @@
 package PanoViewer.Utils;
 
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,7 @@ import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
+import java.net.URI;
 
 /*
  * 
@@ -37,5 +39,38 @@ public class imageutils {
     g.drawImage(img, null, null);
     g.dispose();
     return newImage;
+  }
+
+  /*
+  URL opener
+   */
+  public static void open(URI url) {
+    if (Desktop.isDesktopSupported()) {
+      Desktop desktop = Desktop.getDesktop();
+      try {
+        desktop.browse(url);
+      } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Failed to launch the link, " + "your computer is likely misconfigured ." + "Cannot Open Link " + JOptionPane.WARNING_MESSAGE);
+      }
+    } else {
+      JOptionPane.showMessageDialog(null,
+              "Java is not able to launch links on your computer.",
+              "Cannot Launch Link", JOptionPane.WARNING_MESSAGE);
+
+    }
+  }
+  public static ImageIcon scaleImage(ImageIcon icon, int w, int h) {
+    int nw = icon.getIconWidth();
+    int nh = icon.getIconHeight();
+    if (icon.getIconWidth() > w) {
+      nw = w;
+      nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
+    }
+    if (nh > h) {
+      nh = h;
+      nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
+    }
+
+    return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
   }
 }
