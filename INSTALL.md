@@ -3,7 +3,7 @@ If you want to explore the sourcecode and maybe even improve it, first of all a 
 ## Setting up your local git-repo
 
 ```shell
-git clone https://github.com/GhostFoxSledgehammer/PanoViewer.git
+git clone https://github.com/opencodeiiita/PanoViewer.git
 cd PanoViewer
 ```
 
