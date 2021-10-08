@@ -5,20 +5,34 @@ import PanoViewer.ImagePanels.PanoramicPanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class SwitchScreen extends JFrame {
+/*
+  @author - Rohan Babbar
+  Switching Modes between Flat and Panoramic Images
+ */
+
+public class SwitchModes extends JFrame {
 
   JPanel mainPanel;
   CardLayout cardLayout;
 
-  private static SwitchScreen instance = new SwitchScreen();
+  private static SwitchModes instance = new SwitchModes();
   private static final String FLAT_IMAGES = "FLAT";
   private static final String PANORAMIC_IMAGES = "PANORAMIC";
+  private String currentMode;
 
-  public static SwitchScreen getInstance() {
+  public static SwitchModes getInstance() {
         return instance;
     }
 
-  private SwitchScreen() {
+  public String getCurrentMode() {
+    return currentMode;
+  }
+
+  public void setCurrentMode(String currentMode) {
+    this.currentMode = currentMode;
+  }
+
+  private SwitchModes() {
     setSize(600,600);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -29,15 +43,18 @@ public class SwitchScreen extends JFrame {
     mainPanel.add(PANORAMIC_IMAGES,panoramicPanel);
     add(mainPanel);
     cardLayout = (CardLayout) mainPanel.getLayout();
-    cardLayout.show(mainPanel,FLAT_IMAGES);
+    currentMode = FLAT_IMAGES;
+    cardLayout.show(mainPanel,currentMode);
   }
 
-  public void switchingPanes(ImagePanel imagePanel) {
+  public void switchingModes(ImagePanel imagePanel) {
     switch (imagePanel) {
       case FlatImages:
+        currentMode = FLAT_IMAGES;
         cardLayout.show(mainPanel,FLAT_IMAGES);
         break;
     case PanoramicImages:
+        currentMode = PANORAMIC_IMAGES;
         cardLayout.show(mainPanel,PANORAMIC_IMAGES);
         break;
     }

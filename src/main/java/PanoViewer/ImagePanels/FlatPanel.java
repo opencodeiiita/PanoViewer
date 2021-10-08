@@ -3,6 +3,11 @@ package PanoViewer.ImagePanels;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+  @author - Rohan Babbar
+  The Flat Image panel which will display Flat Images
+*/
+
 public class FlatPanel extends JPanel {
 
   private static FlatPanel instance = new FlatPanel();
