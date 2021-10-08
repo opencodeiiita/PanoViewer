@@ -19,7 +19,7 @@ import java.awt.image.WritableRaster;
 public class imageutils {
 
   private imageutils() {
-    // Ctor.
+    // private constructor to prevent instantiation
   }
 
   public static BufferedImage getFlipedImage(BufferedImage img) {
