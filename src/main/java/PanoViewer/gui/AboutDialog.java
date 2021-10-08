@@ -29,7 +29,7 @@ public class AboutDialog extends JPanel {
 
   private AboutDialog(JFrame owner) {
     setLayout(new GridBagLayout());
-    String filePath = "Images/Panoview.png";
+    String filePath = "Images/99anjali.PNG";
     InputStream image = getFileFromResourceAsStream(filePath);
     ImageIcon icon = null;
     try {
