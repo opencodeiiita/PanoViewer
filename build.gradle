@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'jacoco'
 apply plugin: 'application'
 
@@ -21,7 +21,7 @@ dependencies {
   extraLibs group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2', classifier: 'sources'
   extraLibs group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2', classifier: 'sources'
   testImplementation     'junit:junit:4.13'
-  configurations.compile.extendsFrom(configurations.extraLibs)
+  configurations.api.extendsFrom(configurations.extraLibs)
 }
 jar {
   manifest {
