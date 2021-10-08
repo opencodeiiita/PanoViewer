@@ -1,5 +1,6 @@
 package PanoViewer.gui;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class Menu extends JMenuBar {
@@ -31,5 +32,13 @@ public class Menu extends JMenuBar {
     }
     return instance;
   }
-
+  //  shortcut to Open menu item (ctrl + F)
+  Open.setAccelerator(KeyStroke.getKeyStroke('F', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
+  
+  // actionlistener to the Open menu item calling chooseFile() static method from IOUtils class
+  Open.addActionListener(new ActionListener() 
+   {
+        IOUtils.chooseFile();    
+   });
+  
 }
