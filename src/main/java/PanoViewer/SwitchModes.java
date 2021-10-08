@@ -16,8 +16,6 @@ public class SwitchModes extends JFrame {
   CardLayout cardLayout;
 
   private static SwitchModes instance = new SwitchModes();
-  private static final String FLAT_IMAGES = "FLAT";
-  private static final String PANORAMIC_IMAGES = "PANORAMIC";
   private ImagePanel currentMode;
 
   public static SwitchModes getInstance() {
@@ -39,23 +37,23 @@ public class SwitchModes extends JFrame {
     mainPanel = new JPanel(new CardLayout());
     PanoramicPanel panoramicPanel = PanoramicPanel.getInstance();
     FlatPanel flatPanel = FlatPanel.getInstance();
-    mainPanel.add(FLAT_IMAGES,flatPanel);
-    mainPanel.add(PANORAMIC_IMAGES,panoramicPanel);
+    mainPanel.add(ImagePanel.FlatImages.toString(),flatPanel);
+    mainPanel.add(ImagePanel.PanoramicImages.toString(),panoramicPanel);
     add(mainPanel);
     cardLayout = (CardLayout) mainPanel.getLayout();
     currentMode = ImagePanel.FlatImages;
-    cardLayout.show(mainPanel,FLAT_IMAGES);
+    cardLayout.show(mainPanel,currentMode.toString());
   }
 
   public void switchingModes(ImagePanel imagePanel) {
     switch (imagePanel) {
       case FlatImages:
         currentMode = ImagePanel.FlatImages;
-        cardLayout.show(mainPanel,FLAT_IMAGES);
+        cardLayout.show(mainPanel,currentMode.toString());
         break;
     case PanoramicImages:
         currentMode = ImagePanel.PanoramicImages;
-        cardLayout.show(mainPanel,PANORAMIC_IMAGES);
+        cardLayout.show(mainPanel,currentMode.toString());
         break;
     }
   }
