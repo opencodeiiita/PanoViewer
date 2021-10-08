@@ -17,6 +17,11 @@ import java.awt.image.WritableRaster;
  * @author kshan
  */
 public class imageutils {
+
+  private imageutils() {
+    // private constructor to prevent instantiation
+  }
+
   public static BufferedImage getFlipedImage(BufferedImage img) {
     int height = img.getHeight(null);
     int width = img.getWidth(null);
@@ -37,5 +42,24 @@ public class imageutils {
     g.drawImage(img, null, null);
     g.dispose();
     return newImage;
+  }
+  
+  /**
+   * isRatio method is to know whether the width to height ratio of image is 2:1 or not. 
+   *
+   * @param img the image.
+   * @return true when width to height ratio is 2:1 and false otherwise.
+   */
+  public static boolean isRatio(BufferedImage img) {
+    // height of image
+    int height = img.getHeight(null);
+    // width of image
+    int width = img.getWidth(null);
+    
+    boolean isTwoIsToOne = (width == 2*height);
+    if(isTwoIsToOne) {
+      return true;
+    }
+    return false; 
   }
 }
