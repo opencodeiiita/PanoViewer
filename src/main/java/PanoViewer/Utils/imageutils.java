@@ -44,10 +44,19 @@ public class imageutils {
     return newImage;
   }
   
-  public static Boolean isRatio(BufferedImage img) {
+  /**
+   * isRatio method is to know whether the width to height ratio of image is 2:1 or not. 
+   *
+   * @param img the image.
+   * @return true when width to height ratio is 2:1 and false otherwise.
+   */
+  public static boolean isRatio(BufferedImage img) {
+    // height of image
     int height = img.getHeight(null);
+    // width of image
     int width = img.getWidth(null);
-    Boolean isTwoIsToOne = (width == 2*height);
+    
+    boolean isTwoIsToOne = (width == 2*height);
     if(isTwoIsToOne) {
       return true;
     }
