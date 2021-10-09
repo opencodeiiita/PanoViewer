@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer.Utils;
 
@@ -28,7 +28,7 @@ import java.util.Vector;
  * @author kshan
  */
 public class joglUtils {
-  
+
   public static Texture getTexture(TextureData textureData) {
     GL3 gl = (GL3) GLContext.getCurrentGL();
     return new Texture(gl, textureData);

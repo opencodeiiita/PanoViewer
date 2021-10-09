@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer;
 
@@ -19,7 +19,7 @@ public class Camera {
   private final Vector3f target;
   /* Pitch axis of camera. Initially Pointing towards +ve X axis. */
   private final Vector3f pitchAxis;
-  /* Yaw axis of camera and up vector for calculating perspective matrix. 
+  /* Yaw axis of camera and up vector for calculating perspective matrix.
    Initially towards +ve Y axis.*/
   private final Vector3f up;
   /* Perspective matrix generated from this camera's orientation. */

@@ -58,4 +58,3 @@ public class SwitchModes extends JFrame {
     }
   }
 }
-

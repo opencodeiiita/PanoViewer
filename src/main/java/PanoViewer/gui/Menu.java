@@ -4,7 +4,7 @@ import PanoViewer.Utils.IOUtils;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+//author-Bipul Kumar
 public class Menu extends JMenuBar {
 
   private JMenu File;//creating menu objects

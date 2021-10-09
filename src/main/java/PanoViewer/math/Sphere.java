@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer.math;
 
@@ -47,7 +47,7 @@ public class Sphere {
         float z = (float) sin(j * sectorAngle) * (float) abs(sin(theta));
         vertices[i * (horizontalP + 1) + j].set(x, y, z);
         /*
-         * Horizontal inversion because images are viewed from inside. Vertical Inversion 
+         * Horizontal inversion because images are viewed from inside. Vertical Inversion
          * if texture image is not flipped.
          */
         x = 1 - (float) j / horizontalP;

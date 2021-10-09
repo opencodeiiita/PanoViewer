@@ -26,4 +26,3 @@ public class FileChooser {
      return fileChooser;
     }
 }
-

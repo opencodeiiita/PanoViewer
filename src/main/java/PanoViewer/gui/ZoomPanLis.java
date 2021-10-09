@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer.gui;
 
@@ -16,9 +16,9 @@ public abstract class ZoomPanLis extends MouseAdapter {
 
   private int lastX;
   private int lastY;
-  
+
   public ZoomPanLis() {
-    
+
   }
   @Override
   public void mouseClicked(MouseEvent e) {

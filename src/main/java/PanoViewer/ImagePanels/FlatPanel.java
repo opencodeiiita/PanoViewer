@@ -20,4 +20,3 @@ public class FlatPanel extends JPanel {
         return instance;
     }
 }
-

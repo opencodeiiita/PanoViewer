@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer.Utils;
 
@@ -10,10 +10,10 @@ import java.io.InputStream;
  * @author kshan
  */
 public class IOUtils {
-  
+
   public static void chooseFile()
   {
-    
+
   }
 
   public static InputStream getFileFromResourceAsStream(String fileName) {

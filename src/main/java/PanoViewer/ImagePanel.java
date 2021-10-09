@@ -8,4 +8,3 @@ public enum ImagePanel {
   FlatImages,
   PanoramicImages
 }
-
