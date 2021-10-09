@@ -34,6 +34,15 @@ public class Menu extends JMenuBar {
       }
 
     });
+
+    Exit.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        System.exit(0);
+      }
+
+    });
+
     File.add(Open);
     File.add(Exit);
     Help.add(About);
