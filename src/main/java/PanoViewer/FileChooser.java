@@ -12,8 +12,8 @@ public class FileChooser {
   private static FileChooser instance = new FileChooser();
 
   public static FileChooser getInstance() {
-        return instance;
-    }
+    return instance;
+  }
 
   private FileChooser() {
     String dir = System.getProperty("user.dir");
@@ -22,8 +22,7 @@ public class FileChooser {
   }
 
   public JFileChooser chooser() {
-     fileChooser.setFileFilter(fileFilter);
-     return fileChooser;
-    }
+    fileChooser.setFileFilter(fileFilter);
+    return fileChooser;
+  }
 }
-

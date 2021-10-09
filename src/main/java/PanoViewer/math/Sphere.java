@@ -1,17 +1,15 @@
 /*
- * 
+ *
  */
 package PanoViewer.math;
 
 import static PanoViewer.Settings.invertImage;
 import static java.lang.Math.*;
+
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-/**
- *
- * @author kshan
- */
+/** @author kshan */
 public class Sphere {
 
   private int numVertices, numIndices, horizontalP;
@@ -38,7 +36,7 @@ public class Sphere {
       vertices[i] = new Vector3f();
       texCoords[i] = new Vector2f();
     }
-// calculate triangle vertices
+    // calculate triangle vertices
     for (int i = 0; i <= verticalP; i++) {
       double theta = PI - i * sliceAngle;
       float y = (float) cos(PI - i * sliceAngle);
@@ -47,7 +45,7 @@ public class Sphere {
         float z = (float) sin(j * sectorAngle) * (float) abs(sin(theta));
         vertices[i * (horizontalP + 1) + j].set(x, y, z);
         /*
-         * Horizontal inversion because images are viewed from inside. Vertical Inversion 
+         * Horizontal inversion because images are viewed from inside. Vertical Inversion
          * if texture image is not flipped.
          */
         x = 1 - (float) j / horizontalP;
@@ -55,7 +53,7 @@ public class Sphere {
         texCoords[i * (horizontalP + 1) + j].set(x, z);
       }
     }
-// calculate triangle indices
+    // calculate triangle indices
     for (int i = 0; i < verticalP; i++) {
       for (int j = 0; j < horizontalP; j++) {
         indices[6 * (i * horizontalP + j) + 0] = i * (horizontalP + 1) + j;

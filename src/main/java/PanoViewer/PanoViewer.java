@@ -1,9 +1,8 @@
 /*
- * 
+ *
  */
 package PanoViewer;
 
-import PanoViewer.Utils.IOUtils;
 import PanoViewer.gui.PhotoSphere;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,15 +12,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-/**
- *
- * @author kshan
- */
+/** @author kshan */
 public class PanoViewer {
 
-  /**
-   * @param args the command line arguments
-   */
+  /** @param args the command line arguments */
   public static void main(String[] args) {
     if (args.length < 1) {
       return;

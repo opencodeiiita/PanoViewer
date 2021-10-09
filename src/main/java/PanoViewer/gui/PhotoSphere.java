@@ -1,14 +1,11 @@
 /*
- * 
+ *
  */
 package PanoViewer.gui;
 
-import PanoViewer.Camera;
+import static PanoViewer.Settings.*;
 import static PanoViewer.Utils.joglUtils.createShaderProgram;
 import static PanoViewer.Utils.joglUtils.getTextureData;
-import PanoViewer.math.Sphere;
-import static PanoViewer.Settings.*;
-import com.jogamp.common.nio.Buffers;
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
 import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
@@ -19,6 +16,10 @@ import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 import static com.jogamp.opengl.GL.GL_TEXTURE0;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
+
+import PanoViewer.Camera;
+import PanoViewer.math.Sphere;
+import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
@@ -32,10 +33,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-/**
- *
- * @author kshan
- */
+/** @author kshan */
 public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   private final int[] vao = new int[1];
@@ -64,17 +62,18 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
     addGLEventListener(this);
     camera = new Camera();
     sphereLoc = new Vector3f(0, 0, 0);
-    listener = new ZoomPanLis() {
-      @Override
-      void rotate(double yaw, double pitch) {
-        rotateCamera(yaw, pitch);
-      }
+    listener =
+        new ZoomPanLis() {
+          @Override
+          void rotate(double yaw, double pitch) {
+            rotateCamera(yaw, pitch);
+          }
 
-      @Override
-      void zoom(int zoomAmount) {
-        zoomCamera(zoomAmount);
-      }
-    };
+          @Override
+          void zoom(int zoomAmount) {
+            zoomCamera(zoomAmount);
+          }
+        };
     enableZoomPan();
     fov = IDEAL_FOV;
   }
@@ -205,6 +204,7 @@ public class PhotoSphere extends GLCanvas implements GLEventListener {
 
   /**
    * Rotates the camera.
+   *
    * @param yaw Yaw angle in radian.
    * @param pitch Pitch angle in radian.
    */

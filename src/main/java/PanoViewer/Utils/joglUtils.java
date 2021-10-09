@@ -1,17 +1,18 @@
 /*
- * 
+ *
  */
 package PanoViewer.Utils;
 
+import static PanoViewer.Settings.invertImage;
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
 import static PanoViewer.Utils.imageutils.getFlipedImage;
-import static PanoViewer.Settings.invertImage;
 import static com.jogamp.opengl.GL.GL_NO_ERROR;
 import static com.jogamp.opengl.GL2ES2.GL_COMPILE_STATUS;
 import static com.jogamp.opengl.GL2ES2.GL_FRAGMENT_SHADER;
 import static com.jogamp.opengl.GL2ES2.GL_INFO_LOG_LENGTH;
 import static com.jogamp.opengl.GL2ES2.GL_LINK_STATUS;
 import static com.jogamp.opengl.GL2ES2.GL_VERTEX_SHADER;
+
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLProfile;
@@ -23,20 +24,20 @@ import java.awt.image.BufferedImage;
 import java.util.Scanner;
 import java.util.Vector;
 
-/**
- *
- * @author kshan
- */
+/** @author kshan */
 public class joglUtils {
-  
+
   public static Texture getTexture(TextureData textureData) {
     GL3 gl = (GL3) GLContext.getCurrentGL();
     return new Texture(gl, textureData);
   }
 
   public static TextureData getTextureData(BufferedImage image) {
-    TextureData textureData = AWTTextureIO.newTextureData(GLProfile.getMaxProgrammable(true),
-            invertImage() ? getFlipedImage(image) : image, true);
+    TextureData textureData =
+        AWTTextureIO.newTextureData(
+            GLProfile.getMaxProgrammable(true),
+            invertImage() ? getFlipedImage(image) : image,
+            true);
     return textureData;
   }
 
@@ -84,8 +85,8 @@ public class joglUtils {
 
     if ((vertCompiled[0] != 1) || (fragCompiled[0] != 1)) {
       System.out.println("\nCompilation error; return-flags:");
-      System.out.println(" vertCompiled = " + vertCompiled[0]
-              + "fragCompiled =  " + fragCompiled[0]);
+      System.out.println(
+          " vertCompiled = " + vertCompiled[0] + "fragCompiled =  " + fragCompiled[0]);
     }
 
     int vfprogram = gl.glCreateProgram();
@@ -105,7 +106,7 @@ public class joglUtils {
     return vfprogram;
   }
 
-  static private void printShaderLog(int shader) {
+  private static void printShaderLog(int shader) {
     GL3 gl = (GL3) GLContext.getCurrentGL();
     int[] len = new int[1];
     int[] chWrittn = new int[1];
@@ -121,7 +122,7 @@ public class joglUtils {
     }
   }
 
-  static private void printProgramLog(int program) {
+  private static void printProgramLog(int program) {
     GL3 gl = (GL3) GLContext.getCurrentGL();
     int[] len = new int[1];
     int[] chWrittn = new int[1];

@@ -1,7 +1,7 @@
 package PanoViewer.ImagePanels;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /*
   @author - Rohan Babbar
@@ -13,11 +13,10 @@ public class FlatPanel extends JPanel {
   private static FlatPanel instance = new FlatPanel();
 
   private FlatPanel() {
-        setBackground(Color.BLUE);
-    }
+    setBackground(Color.BLUE);
+  }
 
   public static FlatPanel getInstance() {
-        return instance;
-    }
+    return instance;
+  }
 }
-

@@ -1,28 +1,24 @@
 /*
- * 
+ *
  */
 package PanoViewer.gui;
 
+import static PanoViewer.Settings.*;
+
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import static PanoViewer.Settings.*;
-import java.awt.event.MouseAdapter;
 
-/**
- *
- * @author kshan
- */
+/** @author kshan */
 public abstract class ZoomPanLis extends MouseAdapter {
 
   private int lastX;
   private int lastY;
-  
-  public ZoomPanLis() {
-    
-  }
+
+  public ZoomPanLis() {}
+
   @Override
-  public void mouseClicked(MouseEvent e) {
-  }
+  public void mouseClicked(MouseEvent e) {}
 
   @Override
   public void mousePressed(MouseEvent e) {
@@ -31,16 +27,13 @@ public abstract class ZoomPanLis extends MouseAdapter {
   }
 
   @Override
-  public void mouseReleased(MouseEvent e) {
-  }
+  public void mouseReleased(MouseEvent e) {}
 
   @Override
-  public void mouseEntered(MouseEvent e) {
-  }
+  public void mouseEntered(MouseEvent e) {}
 
   @Override
-  public void mouseExited(MouseEvent e) {
-  }
+  public void mouseExited(MouseEvent e) {}
 
   @Override
   public void mouseDragged(MouseEvent e) {
@@ -48,7 +41,7 @@ public abstract class ZoomPanLis extends MouseAdapter {
     int newY = e.getY();
     int width = e.getComponent().getWidth();
     int height = e.getComponent().getHeight();
-    double yaw = Math.PI * (newX -lastX ) / width * getDragSensitivity();
+    double yaw = Math.PI * (newX - lastX) / width * getDragSensitivity();
     double pitch = Math.PI * (lastY - newY) / height * getDragSensitivity();
     rotate(yaw, pitch);
     lastX = newX;
@@ -56,14 +49,13 @@ public abstract class ZoomPanLis extends MouseAdapter {
   }
 
   @Override
-  public void mouseMoved(MouseEvent e) {
-  }
+  public void mouseMoved(MouseEvent e) {}
 
   abstract void rotate(double yaw, double pitch);
 
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
-    zoom(e.getWheelRotation()* getWheelSensitivity());
+    zoom(e.getWheelRotation() * getWheelSensitivity());
   }
 
   abstract void zoom(int zoomAmount);

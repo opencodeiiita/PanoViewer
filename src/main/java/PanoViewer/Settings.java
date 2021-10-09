@@ -1,14 +1,11 @@
 /*
- * 
+ *
  */
 package PanoViewer;
 
 import com.jogamp.opengl.GLProfile;
 
-/**
- *
- * @author kshan
- */
+/** @author kshan */
 public class Settings {
 
   private static float dragSensitivity = 1f;
@@ -18,8 +15,7 @@ public class Settings {
   /* Whether or not to flip the image when creating texture data. */
   private static boolean invertImage;
 
-  private Settings() {
-  }
+  private Settings() {}
 
   static {
     gl = GLProfile.getMaxProgrammable(true);

@@ -1,7 +1,7 @@
 package PanoViewer.ImagePanels;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /*
   @author - Rohan Babbar
@@ -13,11 +13,10 @@ public class PanoramicPanel extends JPanel {
   private static PanoramicPanel instance = new PanoramicPanel();
 
   private PanoramicPanel() {
-        setBackground(Color.BLACK);
-    }
+    setBackground(Color.BLACK);
+  }
 
   public static PanoramicPanel getInstance() {
-        return instance;
-    }
+    return instance;
+  }
 }
-

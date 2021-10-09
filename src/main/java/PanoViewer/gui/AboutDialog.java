@@ -1,20 +1,16 @@
 package PanoViewer.gui;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
+import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
+import static PanoViewer.Utils.imageutils.open;
+import static PanoViewer.Utils.imageutils.scaleImage;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
-import static PanoViewer.Utils.imageutils.open;
-import static PanoViewer.Utils.imageutils.scaleImage;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 /*
 @author-Bipul Kumar
@@ -49,7 +45,11 @@ public class AboutDialog extends JPanel {
     GridBagConstraints gbc = new GridBagConstraints();
     assert icon != null;
     icon = scaleImage(icon, icon.getIconWidth() / 3, icon.getIconHeight() / 3);
-    lab = new JLabel("<html>PanoViewer-OpenGl based Image Viewer for 360<br>degree Panoramic Images<br><br>Version 1.0<br><br>Minimum requirements for the App to run JDK 8.0+ <br> and OpenGl 4.0+</html>", icon, JLabel.CENTER);
+    lab =
+        new JLabel(
+            "<html>PanoViewer-OpenGl based Image Viewer for 360<br>degree Panoramic Images<br><br>Version 1.0<br><br>Minimum requirements for the App to run JDK 8.0+ <br> and OpenGl 4.0+</html>",
+            icon,
+            JLabel.CENTER);
     gbc.gridy = 0;
     gbc.gridx = 0;
     add(lab, gbc);
@@ -63,10 +63,6 @@ public class AboutDialog extends JPanel {
     setBackground(Color.LIGHT_GRAY);
   }
 
-
-
-
-
   /*
   Getter Method
    */
@@ -77,7 +73,7 @@ public class AboutDialog extends JPanel {
     return instance;
   }
 
-  //driver function
+  // driver function
   public static void main(String[] args) {
     JFrame owner = new JFrame("Test");
     owner.setVisible(true);
