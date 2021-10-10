@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.lang.model.type.NullType;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -45,7 +44,6 @@ public class IOUtils {
    * occurs.
    */
   private static BufferedImage loadImage(File file) {
-
     if (file == null) {
       return null;
     }

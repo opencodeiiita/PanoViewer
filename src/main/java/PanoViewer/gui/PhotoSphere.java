@@ -1,14 +1,11 @@
 /*
- * 
+ *
  */
 package PanoViewer.gui;
 
-import PanoViewer.Camera;
+import static PanoViewer.Settings.*;
 import static PanoViewer.Utils.joglUtils.createShaderProgram;
 import static PanoViewer.Utils.joglUtils.getTextureData;
-import PanoViewer.math.Sphere;
-import static PanoViewer.Settings.*;
-import com.jogamp.common.nio.Buffers;
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
 import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
@@ -19,6 +16,10 @@ import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 import static com.jogamp.opengl.GL.GL_TEXTURE0;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
+
+import PanoViewer.Camera;
+import PanoViewer.math.Sphere;
+import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;

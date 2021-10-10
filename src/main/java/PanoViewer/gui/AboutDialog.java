@@ -1,28 +1,23 @@
 package PanoViewer.gui;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
 import static PanoViewer.Utils.imageutils.open;
 import static PanoViewer.Utils.imageutils.scaleImage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 /*
-@author-Bipul Kumar
-Constructor to initialise the object of AboutDialog.
-This creates a basic UI.
-This follows Singleton Pattern.
+ * Constructor to initialise the object of AboutDialog. This creates a basic UI.
+ * @author-Bipul Kumar
  */
 public class AboutDialog extends JPanel {
+
   private String mess1, mess2, mess3;
   private URI url;
   private JLabel lab;
@@ -62,10 +57,6 @@ public class AboutDialog extends JPanel {
     add(but, gbc);
     setBackground(Color.LIGHT_GRAY);
   }
-
-
-
-
 
   /*
   Getter Method

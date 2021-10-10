@@ -1,12 +1,13 @@
 /*
- * 
+ *
  */
 package PanoViewer.gui;
 
+import static PanoViewer.Settings.*;
+
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import static PanoViewer.Settings.*;
-import java.awt.event.MouseAdapter;
 
 /**
  *
@@ -16,9 +17,9 @@ public abstract class ZoomPanLis extends MouseAdapter {
 
   private int lastX;
   private int lastY;
-  
+
   public ZoomPanLis() {
-    
+
   }
   @Override
   public void mouseClicked(MouseEvent e) {

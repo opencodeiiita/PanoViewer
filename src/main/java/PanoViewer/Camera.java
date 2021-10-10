@@ -1,14 +1,10 @@
-/*
- * 
- */
 package PanoViewer;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 /**
- * A fixed camera located at the (0,0,0,).
- *
+ * A fixed camera located at the (0,0,0).
  * @author kshan
  */
 public class Camera {

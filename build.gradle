@@ -24,14 +24,12 @@ apply plugin: "com.diffplug.spotless"
 spotless {
   java {
     target "**/*.java"
-    trimTrailingWhitespace()
+    ratchetFrom("origin/master")
     indentWithSpaces(2)
+    trimTrailingWhitespace()
     endWithNewline()
     removeUnusedImports()
-//    importOrderFile();
-    importOrder() // standard import order
-//    importOrder('java', 'javax', 'com.acme', '')
-//    googleJavaFormat() // has its own section below
+    importOrder()
   }
 }
 repositories {
