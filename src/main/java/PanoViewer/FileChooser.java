@@ -7,23 +7,22 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileChooser {
 
-  private JFileChooser fileChooser;
-  private FileFilter fileFilter;
-  private static FileChooser instance = new FileChooser();
+  private static JFileChooser fileChooser;
+  private static FileFilter fileFilter;
 
-  public static FileChooser getInstance() {
-        return instance;
+  /*
+   * Returns a fileChooser with default filter for images.
+   */
+  public static JFileChooser getFileChooser() {
+    if (fileChooser == null) {
+
+      fileChooser = new JFileChooser();
     }
+    if (fileFilter == null) {
+      fileFilter = new FileNameExtensionFilter("Images Files", ImageIO.getReaderFileSuffixes());
 
-  private FileChooser() {
-    String dir = System.getProperty("user.dir");
-    fileChooser = new JFileChooser(dir);
-    fileFilter = new FileNameExtensionFilter("Images Files", ImageIO.getReaderFileSuffixes());
+    }
+    fileChooser.setFileFilter(fileFilter);
+    return fileChooser;
   }
-
-  public JFileChooser chooser() {
-     fileChooser.setFileFilter(fileFilter);
-     return fileChooser;
-    }
 }
-
