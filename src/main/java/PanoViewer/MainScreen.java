@@ -15,16 +15,18 @@ public class MainScreen extends JFrame {
   }
 
   private MainScreen() {
-    setSize(600,600);
+    setSize(600, 600);
     setLayout(null);
     setVisible(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setJMenuBar(menuBar);
     jPanel = new JPanel();
-    jPanel.setBounds(50,50,400,400);
+    jPanel.setBounds(50, 50, 400, 400);
     jPanel.setBackground(Color.GRAY);
     add(jPanel);
   }
 
+  public static void main(String args[]) {
+    MainScreen.getInstance();
+  }
 }
-
