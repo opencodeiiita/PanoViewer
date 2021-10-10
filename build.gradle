@@ -29,8 +29,8 @@ spotless {
     endWithNewline()
     removeUnusedImports()
 //    importOrderFile();
-//    importOrder() // standard import order
-    importOrder('java', 'javax', 'com.acme', '')
+    importOrder() // standard import order
+//    importOrder('java', 'javax', 'com.acme', '')
 //    googleJavaFormat() // has its own section below
   }
 }
