@@ -7,7 +7,7 @@ import java.awt.*;
 public class MainScreen extends JFrame {
 
   private JMenuBar menuBar = Menu.getInstance();
-  public static JPanel jPanel;
+  private JPanel jPanel;
   private static MainScreen instance = new MainScreen();
 
   public static MainScreen getInstance() {
