@@ -21,7 +21,7 @@ public class MainScreen extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setJMenuBar(menuBar);
     jPanel = new JPanel();
-    jPanel.setBounds(50,50,300,400);
+    jPanel.setBounds(50,50,400,400);
     jPanel.setBackground(Color.GRAY);
     add(jPanel);
   }
