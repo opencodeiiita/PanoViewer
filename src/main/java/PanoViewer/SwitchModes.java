@@ -7,19 +7,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static PanoViewer.Utils.imageutils.isRatio;
+
 /*
   @author - Rohan Babbar
   Switching Modes between Flat and Panoramic Images
  */
 
-private class SwitchModes extends JFrame {
+public class SwitchModes extends JFrame {
 
   JPanel mainPanel;
   CardLayout cardLayout;
 
   private static SwitchModes instance = new SwitchModes();
-  private ImagePanel currentMode;
-
+  private static ImagePanel currentMode;
+  private static BufferedImage cache;
   public static SwitchModes getInstance() {
     return instance;
   }
@@ -28,8 +30,8 @@ private class SwitchModes extends JFrame {
     return currentMode;
   }
 
-  public void setCurrentMode(ImagePanel currentMode) {
-    this.currentMode = currentMode;
+  public static void setCurrentMode(ImagePanel currentMode) {
+    SwitchModes.currentMode = currentMode;
   }
 
   private SwitchModes() {
@@ -47,7 +49,7 @@ private class SwitchModes extends JFrame {
     cardLayout.show(mainPanel, currentMode.toString());
   }
 
-  public void switchingModes(ImagePanel imagePanel) {
+  private void switchingModes(ImagePanel imagePanel) {
     switch (imagePanel) {
       case FlatImages:
         currentMode = ImagePanel.FlatImages;
@@ -66,10 +68,13 @@ private class SwitchModes extends JFrame {
    * @param image the image to be set.
    */
   public static void setImage(BufferedImage image) {
-    BufferedImage cache = image;
-    if (isRatio(image)) {
+    cache=image;
+    if(isRatio(image))
+    {
       setCurrentMode(currentMode.PanoramicImages);
-    } else
+    }
+    else
       setCurrentMode(currentMode.FlatImages);
+
   }
 }
