@@ -31,7 +31,7 @@ public class IOUtils {
       if (loadImage == null) {
         return;
       }
-      SwitchModes.setImage(loadImage);
+      SwitchModes.getInstance().setImage(loadImage);
     }
   }
 
