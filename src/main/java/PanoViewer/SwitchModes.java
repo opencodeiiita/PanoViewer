@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
   Switching Modes between Flat and Panoramic Images
  */
 
-public class SwitchModes extends JFrame {
+private class SwitchModes extends JFrame {
 
   JPanel mainPanel;
   CardLayout cardLayout;
@@ -66,6 +66,10 @@ public class SwitchModes extends JFrame {
    * @param image the image to be set.
    */
   public static void setImage(BufferedImage image) {
-
+    BufferedImage cache = image;
+    if (isRatio(image)) {
+      setCurrentMode(currentMode.PanoramicImages);
+    } else
+      setCurrentMode(currentMode.FlatImages);
   }
 }
