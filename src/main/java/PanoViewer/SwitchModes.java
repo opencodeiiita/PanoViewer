@@ -62,7 +62,7 @@ public class SwitchModes extends JFrame {
 
   /*
    * Sets the image to be displayed.
-   * 
+   *
    * @param image the image to be set.
    */
   public static void setImage(BufferedImage image) {

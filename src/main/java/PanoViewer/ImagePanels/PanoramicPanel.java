@@ -20,4 +20,3 @@ public class PanoramicPanel extends JPanel {
         return instance;
     }
 }
-

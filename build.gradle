@@ -24,12 +24,12 @@ apply plugin: "com.diffplug.spotless"
 spotless {
   java {
     target "**/*.java"
-    ratchetFrom("origin/master")
-    indentWithSpaces(2)
+    //ratchetFrom("origin/master")
+    //importOrder()
     trimTrailingWhitespace()
+    indentWithSpaces(2)
     endWithNewline()
     removeUnusedImports()
-    importOrder()
   }
 }
 repositories {

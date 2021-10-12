@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer.Utils;
 
@@ -37,9 +37,9 @@ public class IOUtils {
 
   /*
    * Loads image from the given file.
-   * 
+   *
    * @param file The file to be opened.
-   * 
+   *
    * @return the opened image. returns null when file is invalid or an exception
    * occurs.
    */
