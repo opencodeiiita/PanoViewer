@@ -21,7 +21,7 @@ public class SwitchModes extends JFrame {
 
   private static SwitchModes instance = new SwitchModes();
   private static ImagePanel currentMode;
-  private static BufferedImage cache;
+  private BufferedImage cache;
   public static SwitchModes getInstance() {
     return instance;
   }
@@ -30,7 +30,7 @@ public class SwitchModes extends JFrame {
     return currentMode;
   }
 
-  public static void setCurrentMode(ImagePanel currentMode) {
+  public void setCurrentMode(ImagePanel currentMode) {
     SwitchModes.currentMode = currentMode;
   }
 
@@ -67,7 +67,7 @@ public class SwitchModes extends JFrame {
    *
    * @param image the image to be set.
    */
-  public static void setImage(BufferedImage image) {
+  public void setImage(BufferedImage image) {
     cache=image;
     if(isRatio(image))
     {
