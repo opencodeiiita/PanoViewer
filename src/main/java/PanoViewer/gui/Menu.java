@@ -3,9 +3,6 @@ package PanoViewer.gui;
 import PanoViewer.ImagePanel;
 import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -15,9 +12,9 @@ public class Menu extends JMenuBar {
   private JMenu Help;// creating menu objects
   private JMenuItem Open, Exit;// creating menuitem objects
   private JMenuItem About;// creating menuitem objects
-  private JMenu Mode;
-  private JMenuItem Flat;
-  private JMenuItem Panoramic;
+  private JMenu mode;
+  private JMenuItem flat;
+  private JMenuItem panoramic;
 
   private static Menu instance;// creating a menu instance
   // private constructor for implementing singleton design principle
@@ -29,12 +26,12 @@ public class Menu extends JMenuBar {
     Open = new JMenuItem("Open");
     Exit = new JMenuItem("Exit");
     About = new JMenuItem("About");
-    Mode = new JMenu("Mode");
-    Flat = new JMenuItem("Flat");
-    Panoramic = new JMenuItem("Panoramic");
+    mode = new JMenu("Mode");
+    flat = new JMenuItem("Flat");
+    panoramic = new JMenuItem("Panoramic");
     add(File);
     add(Help);
-    add(Mode);
+    add(mode);
     // shortcut to Open menu item (ctrl + F)
     Open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 
@@ -59,20 +56,20 @@ public class Menu extends JMenuBar {
     File.add(Open);
     File.add(Exit);
     Help.add(About);
-    Mode.add(Flat);
-    Mode.add(Panoramic);
+    mode.add(flat);
+    mode.add(panoramic);
 
-    Flat.addActionListener(new ActionListener() {
+    flat.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().switchingModes(ImagePanel.FlatImages);
+        SwitchModes.getInstance().setCurrentMode(ImagePanel.FlatImages);
       }
     });
 
-    Panoramic.addActionListener(new ActionListener() {
+    panoramic.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().switchingModes(ImagePanel.PanoramicImages);
+        SwitchModes.getInstance().setCurrentMode(ImagePanel.PanoramicImages);
       }
     });
   }
