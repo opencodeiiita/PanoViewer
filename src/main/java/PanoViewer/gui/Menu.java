@@ -13,8 +13,9 @@ public class Menu extends JMenuBar {
   private JMenuItem Open, Exit;// creating menuitem objects
   private JMenuItem About;// creating menuitem objects
   private JMenu mode;
-  private JMenuItem flat;
-  private JMenuItem panoramic;
+  private JCheckBoxMenuItem flat;
+  private JCheckBoxMenuItem panoramic;
+  private ButtonGroup group = new ButtonGroup();
 
   private static Menu instance;// creating a menu instance
   // private constructor for implementing singleton design principle
@@ -27,11 +28,14 @@ public class Menu extends JMenuBar {
     Exit = new JMenuItem("Exit");
     About = new JMenuItem("About");
     mode = new JMenu("Mode");
-    flat = new JMenuItem("Flat");
-    panoramic = new JMenuItem("Panoramic");
+    flat = new JCheckBoxMenuItem("Flat");
+    panoramic = new JCheckBoxMenuItem("Panoramic");
+    panoramic.setSelected(true);
     add(File);
     add(Help);
     add(mode);
+    group.add(flat);
+    group.add(panoramic);
     // shortcut to Open menu item (ctrl + F)
     Open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 
