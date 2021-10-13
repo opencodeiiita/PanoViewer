@@ -2,7 +2,6 @@ package PanoViewer;
 
 import PanoViewer.gui.Menu;
 import javax.swing.*;
-import java.awt.*;
 
 public class MainScreen extends JFrame {
 
