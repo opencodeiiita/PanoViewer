@@ -2,7 +2,6 @@ package PanoViewer;
 
 import PanoViewer.ImagePanels.FlatPanel;
 import PanoViewer.ImagePanels.PanoramicPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -31,6 +30,7 @@ public class SwitchModes extends JPanel {
 
   public void setCurrentMode(ImagePanel currentMode) {
     SwitchModes.currentMode = currentMode;
+    switchingModes();
   }
 
   private SwitchModes() {
@@ -41,21 +41,12 @@ public class SwitchModes extends JPanel {
     add(ImagePanel.FlatImages.toString(),flatPanel);
     add(ImagePanel.PanoramicImages.toString(),panoramicPanel);
     cardLayout = (CardLayout)getLayout();
-    currentMode = ImagePanel.PanoramicImages;
+    setCurrentMode(ImagePanel.PanoramicImages);
     cardLayout.show(this,currentMode.toString());
   }
 
-  public void switchingModes(ImagePanel imagePanel) {
-    switch (imagePanel) {
-      case FlatImages:
-        currentMode = ImagePanel.FlatImages;
-        cardLayout.show(SwitchModes.getInstance(),currentMode.toString());
-        break;
-      case PanoramicImages:
-        currentMode = ImagePanel.PanoramicImages;
-        cardLayout.show(SwitchModes.getInstance(),currentMode.toString());
-        break;
-    }
+  private void switchingModes() {
+    cardLayout.show(this,currentMode.toString());
   }
 
   /*
