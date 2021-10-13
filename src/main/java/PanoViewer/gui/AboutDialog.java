@@ -2,7 +2,6 @@ package PanoViewer.gui;
 
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
 import static PanoViewer.Utils.imageutils.open;
-import static PanoViewer.Utils.imageutils.scaleImage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -24,9 +23,9 @@ public class AboutDialog extends JPanel {
   private JButton but;
   private static AboutDialog instance;
 
-  private AboutDialog(JFrame owner) {
+ private AboutDialog() {
     setLayout(new GridBagLayout());
-    String filePath = "Images/99anjali.PNG";
+    String filePath = "Images/Logos/Panoviewer.png";
     InputStream image = getFileFromResourceAsStream(filePath);
     ImageIcon icon = null;
     try {
@@ -43,39 +42,43 @@ public class AboutDialog extends JPanel {
     }
     GridBagConstraints gbc = new GridBagConstraints();
     assert icon != null;
-    icon = scaleImage(icon, icon.getIconWidth() / 3, icon.getIconHeight() / 3);
-    lab = new JLabel("<html>PanoViewer-OpenGl based Image Viewer for 360<br>degree Panoramic Images<br><br>Version 1.0<br><br>Minimum requirements for the App to run JDK 8.0+ <br> and OpenGl 4.0+</html>", icon, JLabel.CENTER);
+    // icon = scaleImage(icon, icon.getIconWidth()/2, icon.getIconHeight()/2);
+    lab = new JLabel("<html> <br><br><br>&nbsp PanoViewer-OpenGl based Image Viewer for 360 &nbsp <br>&nbsp degree Panoramic Images &nbsp <br><br> &nbsp Version 1.0<br><br>&nbsp Minimum requirements for the App to run JDK 8.0+ &nbsp <br> &nbsp and OpenGl 4.0+</html>", icon, JLabel.CENTER);
     gbc.gridy = 0;
     gbc.gridx = 0;
     add(lab, gbc);
     lab.setVerticalTextPosition(JLabel.TOP);
     lab.setHorizontalAlignment(JLabel.CENTER);
+    lab.setFont(new Font("Sans Serif", Font.PLAIN, 14));
+    lab.setForeground(new Color(0xffffff));
     but = new JButton("Source Code");
     but.addActionListener(actionEvent -> open(url));
     gbc.gridy = 1;
     gbc.gridx = 0;
     add(but, gbc);
-    setBackground(Color.LIGHT_GRAY);
+
+    setBackground(Color.black);
   }
 
   /*
   Getter Method
    */
-  private static AboutDialog getInstance(JFrame owner) {
+  public static AboutDialog getInstance() {
     if (instance == null) {
-      instance = new AboutDialog(owner);
+      instance = new AboutDialog();
     }
+//    instance.setVisible(true);
     return instance;
   }
 
   //driver function
-  public static void main(String[] args) {
-    JFrame owner = new JFrame("Test");
-    owner.setVisible(true);
-    owner.setSize(200, 200);
-    owner.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    instance = getInstance(owner);
-    owner.add(instance);
-    instance.setVisible(true);
-  }
+//  public static void main(String[] args) {
+//    JFrame owner = new JFrame("Test");
+//    owner.setVisible(true);
+//    owner.setSize(200, 200);
+//    owner.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//    instance = getInstance(owner);
+//    owner.add(instance);
+//    instance.setVisible(true);
+//  }
 }

@@ -1,9 +1,9 @@
 package PanoViewer.gui;
 
-import PanoViewer.ImagePanel;
+import PanoViewer.MainScreen;
+import PanoViewer.Mode;
 import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -13,11 +13,13 @@ public class Menu extends JMenuBar {
 
   private JMenu File;// creating menu objects
   private JMenu Help;// creating menu objects
-  private JMenuItem Open, Exit;// creating menuitem objects
+  private JMenu options;// creating menu objects
+  private JMenuItem open, exit , settings;// creating menuitem objects
   private JMenuItem About;// creating menuitem objects
-  private JMenu Mode;
-  private JMenuItem Flat;
-  private JMenuItem Panoramic;
+  private JMenu mode;
+  private JCheckBoxMenuItem flat;
+  private JCheckBoxMenuItem panoramic;
+  private ButtonGroup group = new ButtonGroup();
 
   private static Menu instance;// creating a menu instance
   // private constructor for implementing singleton design principle
@@ -26,21 +28,27 @@ public class Menu extends JMenuBar {
     // menuBar=new JMenuBar();
     File = new JMenu("File");
     Help = new JMenu("Help");
-    Open = new JMenuItem("Open");
-    Exit = new JMenuItem("Exit");
+    options = new JMenu("Options");
+    open = new JMenuItem("Open");
+    exit = new JMenuItem("Exit");
+    settings = new JMenuItem("Settings");
     About = new JMenuItem("About");
-    Mode = new JMenu("Mode");
-    Flat = new JMenuItem("Flat");
-    Panoramic = new JMenuItem("Panoramic");
+    mode = new JMenu("Mode");
+    flat = new JCheckBoxMenuItem("Flat");
+    panoramic = new JCheckBoxMenuItem("Panoramic");
+    panoramic.setSelected(true);
     add(File);
     add(Help);
-    add(Mode);
+    add(options);
+    add(mode);
+    group.add(flat);
+    group.add(panoramic);
     // shortcut to Open menu item (ctrl + F)
-    Open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
+    open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 
     // actionlistener to the Open menu item calling chooseFile() static method from
     // IOUtils class
-    Open.addActionListener(new ActionListener() {
+    open.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         IOUtils.getFile();
@@ -48,7 +56,7 @@ public class Menu extends JMenuBar {
 
     });
 
-    Exit.addActionListener(new ActionListener() {
+    exit.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.exit(0);
@@ -56,25 +64,48 @@ public class Menu extends JMenuBar {
 
     });
 
-    File.add(Open);
-    File.add(Exit);
+
+    settings.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {}
+
+    });
+
+    File.add(open);
+    File.add(exit);
     Help.add(About);
-    Mode.add(Flat);
-    Mode.add(Panoramic);
+    options.add(settings);
+    mode.add(flat);
+    mode.add(panoramic);
 
-    Flat.addActionListener(new ActionListener() {
+    flat.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().switchingModes(ImagePanel.FlatImages);
+        SwitchModes.getInstance().setCurrentMode(Mode.Flat);
       }
     });
 
-    Panoramic.addActionListener(new ActionListener() {
+    panoramic.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().switchingModes(ImagePanel.PanoramicImages);
+        SwitchModes.getInstance().setCurrentMode(Mode.Panoramic);
       }
     });
+    About.addActionListener(new ActionListener()
+    {
+
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        JDialog jd=new JDialog(MainScreen.getInstance(),true);
+        jd.add(AboutDialog.getInstance());
+        jd.setTitle("About");
+        jd.pack();
+        jd.setLocationRelativeTo(MainScreen.getInstance());
+        jd.setVisible(true);
+
+      }
+    });
+
   }
 
   // getter method
@@ -84,5 +115,4 @@ public class Menu extends JMenuBar {
     }
     return instance;
   }
-
 }

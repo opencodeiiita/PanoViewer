@@ -53,6 +53,9 @@ public class joglUtils {
     for (int i = 0; i < lines.size(); i++) {
       program[i] = (String) lines.elementAt(i) + "\n";
     }
+
+    sc.close();
+
     return program;
   }
 
