@@ -3,6 +3,13 @@ package PanoViewer;
 import PanoViewer.gui.Menu;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class MainScreen extends JFrame {
 
@@ -24,6 +31,19 @@ public class MainScreen extends JFrame {
     jPanel.setBounds(50, 50, 400, 400);
     jPanel.setBackground(Color.GRAY);
     add(jPanel);
+    jPanel.setDropTarget(new DropTarget() {
+      public synchronized void drop(DropTargetDropEvent evt) {
+        try {
+          evt.acceptDrop(DnDConstants.ACTION_COPY);
+          BufferedImage image = (BufferedImage) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+          SwitchModes.setImage(image);
+        } catch (Exception ex) {
+          ex.printStackTrace();
+        }
+      }
+      // image=SwitchModes.setImage(image);
+    });
+
   }
 
   public static void main(String args[]) {
