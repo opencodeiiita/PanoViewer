@@ -10,7 +10,8 @@ public class Menu extends JMenuBar {
 
   private JMenu File;// creating menu objects
   private JMenu Help;// creating menu objects
-  private JMenuItem Open, Exit;// creating menuitem objects
+  private JMenu Options;// creating menu objects
+  private JMenuItem Open, Exit , Settings;// creating menuitem objects
   private JMenuItem About;// creating menuitem objects
   private JMenu mode;
   private JCheckBoxMenuItem flat;
@@ -24,8 +25,10 @@ public class Menu extends JMenuBar {
     // menuBar=new JMenuBar();
     File = new JMenu("File");
     Help = new JMenu("Help");
+    Options = new JMenu("Options");
     Open = new JMenuItem("Open");
     Exit = new JMenuItem("Exit");
+    Settings = new JMenuItem("Settings");
     About = new JMenuItem("About");
     mode = new JMenu("Mode");
     flat = new JCheckBoxMenuItem("Flat");
@@ -33,6 +36,7 @@ public class Menu extends JMenuBar {
     panoramic.setSelected(true);
     add(File);
     add(Help);
+    add(Options);
     add(mode);
     group.add(flat);
     group.add(panoramic);
@@ -57,9 +61,17 @@ public class Menu extends JMenuBar {
 
     });
 
+
+    Settings.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {}
+
+    });
+
     File.add(Open);
     File.add(Exit);
     Help.add(About);
+    Options.add(Settings);
     mode.add(flat);
     mode.add(panoramic);
 
