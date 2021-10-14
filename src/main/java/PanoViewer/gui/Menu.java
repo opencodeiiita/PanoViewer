@@ -11,7 +11,7 @@ public class Menu extends JMenuBar {
   private JMenu File;// creating menu objects
   private JMenu Help;// creating menu objects
   private JMenu options;// creating menu objects
-  private JMenuItem Open, Exit , Settings;// creating menuitem objects
+  private JMenuItem open, exit , settings;// creating menuitem objects
   private JMenuItem About;// creating menuitem objects
   private JMenu mode;
   private JCheckBoxMenuItem flat;
@@ -26,9 +26,9 @@ public class Menu extends JMenuBar {
     File = new JMenu("File");
     Help = new JMenu("Help");
     options = new JMenu("Options");
-    Open = new JMenuItem("Open");
-    Exit = new JMenuItem("Exit");
-    Settings = new JMenuItem("Settings");
+    open = new JMenuItem("Open");
+    exit = new JMenuItem("Exit");
+    settings = new JMenuItem("Settings");
     About = new JMenuItem("About");
     mode = new JMenu("Mode");
     flat = new JCheckBoxMenuItem("Flat");
@@ -41,11 +41,11 @@ public class Menu extends JMenuBar {
     group.add(flat);
     group.add(panoramic);
     // shortcut to Open menu item (ctrl + F)
-    Open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
+    open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 
     // actionlistener to the Open menu item calling chooseFile() static method from
     // IOUtils class
-    Open.addActionListener(new ActionListener() {
+    open.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         IOUtils.getFile();
@@ -53,7 +53,7 @@ public class Menu extends JMenuBar {
 
     });
 
-    Exit.addActionListener(new ActionListener() {
+    exit.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.exit(0);
@@ -62,16 +62,16 @@ public class Menu extends JMenuBar {
     });
 
 
-    Settings.addActionListener(new ActionListener() {
+    settings.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {}
 
     });
 
-    File.add(Open);
-    File.add(Exit);
+    File.add(open);
+    File.add(exit);
     Help.add(About);
-    options.add(Settings);
+    options.add(settings);
     mode.add(flat);
     mode.add(panoramic);
 
