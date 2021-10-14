@@ -2,7 +2,6 @@ package PanoViewer.gui;
 
 import static PanoViewer.Utils.IOUtils.getFileFromResourceAsStream;
 import static PanoViewer.Utils.imageutils.open;
-import static PanoViewer.Utils.imageutils.scaleImage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class AboutDialog extends JPanel {
     }
     GridBagConstraints gbc = new GridBagConstraints();
     assert icon != null;
-    icon = scaleImage(icon, icon.getIconWidth(), icon.getIconHeight());
+    // icon = scaleImage(icon, icon.getIconWidth()/2, icon.getIconHeight()/2);
     lab = new JLabel("<html> <br><br><br>&nbsp PanoViewer-OpenGl based Image Viewer for 360 &nbsp <br>&nbsp degree Panoramic Images &nbsp <br><br> &nbsp Version 1.0<br><br>&nbsp Minimum requirements for the App to run JDK 8.0+ &nbsp <br> &nbsp and OpenGl 4.0+</html>", icon, JLabel.CENTER);
     gbc.gridy = 0;
     gbc.gridx = 0;
