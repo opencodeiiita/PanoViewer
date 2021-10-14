@@ -25,7 +25,7 @@ public class Menu extends JMenuBar {
     // menuBar=new JMenuBar();
     File = new JMenu("File");
     Help = new JMenu("Help");
-    options = new JMenu("options");
+    options = new JMenu("Options");
     Open = new JMenuItem("Open");
     Exit = new JMenuItem("Exit");
     Settings = new JMenuItem("Settings");
