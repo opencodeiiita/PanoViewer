@@ -2,6 +2,8 @@ package PanoViewer;
 
 import PanoViewer.ImagePanels.FlatPanel;
 import PanoViewer.ImagePanels.PanoramicPanel;
+import PanoViewer.gui.Menu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -58,10 +60,16 @@ public class SwitchModes extends JPanel {
     cache=image;
     if(isRatio(image))
     {
-      setCurrentMode(currentMode.PanoramicImages);
+      Menu.getInstance().getPanoramic().setSelected(true);
+      setCurrentMode(ImagePanel.PanoramicImages);
+      ImageIcon icon = new ImageIcon(image);
+      PanoramicPanel.getInstance().getLabel().setIcon(icon);
     }
-    else
-      setCurrentMode(currentMode.FlatImages);
-
+    else {
+      Menu.getInstance().getFlat().setSelected(true);
+      setCurrentMode(ImagePanel.FlatImages);
+      ImageIcon icon = new ImageIcon(image);
+      FlatPanel.getInstance().getLabel().setIcon(icon);
+    }
   }
 }
