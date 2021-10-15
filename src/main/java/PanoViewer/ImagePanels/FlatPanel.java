@@ -1,7 +1,6 @@
 package PanoViewer.ImagePanels;
 
 import javax.swing.*;
-import java.awt.*;
 
 /*
   @author - Rohan Babbar
