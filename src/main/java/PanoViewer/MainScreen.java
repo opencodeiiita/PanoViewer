@@ -2,14 +2,12 @@ package PanoViewer;
 
 import PanoViewer.Utils.IOUtils;
 import PanoViewer.gui.Menu;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import static java.awt.dnd.DnDConstants.ACTION_COPY;
