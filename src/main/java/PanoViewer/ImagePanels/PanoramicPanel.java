@@ -11,9 +11,15 @@ import java.awt.*;
 public class PanoramicPanel extends JPanel {
 
   private static PanoramicPanel instance = new PanoramicPanel();
+  private JLabel label;
 
   private PanoramicPanel() {
-        setBackground(Color.BLACK);
+    label = new JLabel();
+    add(label);
+  }
+
+  public JLabel getLabel() {
+        return label;
     }
 
   public static PanoramicPanel getInstance() {

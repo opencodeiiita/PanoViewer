@@ -11,12 +11,18 @@ import java.awt.*;
 public class FlatPanel extends JPanel {
 
   private static FlatPanel instance = new FlatPanel();
+  private JLabel label;
 
   private FlatPanel() {
-        setBackground(Color.BLUE);
+      label = new JLabel();
+      add(label);
+  }
+
+    public JLabel getLabel() {
+        return label;
     }
 
-  public static FlatPanel getInstance() {
+    public static FlatPanel getInstance() {
         return instance;
     }
 }
