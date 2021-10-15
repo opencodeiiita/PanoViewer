@@ -88,6 +88,19 @@ public class Menu extends JMenuBar {
         SwitchModes.getInstance().setCurrentMode(ImagePanel.PanoramicImages);
       }
     });
+
+    About.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JFrame aboutFrame = new JFrame("About");
+        aboutFrame.setVisible(true);
+        aboutFrame.setSize(800, 600);
+        aboutFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        AboutDialog aboutInstance = AboutDialog.getInstance(aboutFrame);
+        aboutFrame.add(aboutInstance);
+        instance.setVisible(true);
+      }
+    });
   }
 
   // getter method

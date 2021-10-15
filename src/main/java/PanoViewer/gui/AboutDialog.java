@@ -63,7 +63,7 @@ public class AboutDialog extends JPanel {
   /*
   Getter Method
    */
-  private static AboutDialog getInstance(JFrame owner) {
+  public static AboutDialog getInstance(JFrame owner) {
     if (instance == null) {
       instance = new AboutDialog(owner);
     }
