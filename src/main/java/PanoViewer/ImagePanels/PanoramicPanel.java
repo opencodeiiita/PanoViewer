@@ -20,7 +20,7 @@ public class PanoramicPanel extends JPanel {
 
   public JLabel getLabel() {
         return label;
-    }
+  }
 
   public static PanoramicPanel getInstance() {
         return instance;
