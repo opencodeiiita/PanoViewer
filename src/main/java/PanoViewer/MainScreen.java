@@ -1,5 +1,6 @@
 package PanoViewer;
 
+import PanoViewer.Utils.IOUtils;
 import PanoViewer.gui.Menu;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -67,8 +68,7 @@ public class MainScreen extends JFrame implements DropTargetListener {
       try {
         if (df.isFlavorJavaFileListType()) {
           List<File> files = (List<File>) transferable.getTransferData(df);
-          File file = files.get(0);
-          displayImage(file.getPath());
+          displayImage(files.get(0));
         }
       }catch (Exception e) {
         e.printStackTrace();
@@ -76,13 +76,8 @@ public class MainScreen extends JFrame implements DropTargetListener {
     }
   }
 
-  private void displayImage(String path) {
-    BufferedImage image = null;
-    try {
-      image = ImageIO.read(new File(path));
-    }catch (IOException e) {
-      e.printStackTrace();
-    }
+  private void displayImage(File file) {
+    BufferedImage image = IOUtils.loadImage(file);
     SwitchModes.getInstance().setImage(image);
   }
 }
