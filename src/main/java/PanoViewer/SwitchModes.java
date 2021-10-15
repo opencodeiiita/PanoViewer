@@ -60,16 +60,10 @@ public class SwitchModes extends JPanel {
     cache=image;
     if(isRatio(image))
     {
-      Menu.getInstance().getPanoramic().setSelected(true);
       setCurrentMode(ImagePanel.PanoramicImages);
-      ImageIcon icon = new ImageIcon(image);
-      PanoramicPanel.getInstance().getLabel().setIcon(icon);
     }
     else {
-      Menu.getInstance().getFlat().setSelected(true);
       setCurrentMode(ImagePanel.FlatImages);
-      ImageIcon icon = new ImageIcon(image);
-      FlatPanel.getInstance().getLabel().setIcon(icon);
     }
   }
 }
