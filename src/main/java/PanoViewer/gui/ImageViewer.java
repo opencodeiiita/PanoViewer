@@ -17,17 +17,20 @@ public interface ImageViewer {
     void enableZoom()-Enables zoom feature
      */
     void enableZoom(boolean flag);
-    /*
-    Checks if the zoom is enabled or not.
-    Returns true is zoom is enabled else false.
+    /**
+     * Checks if zoom is enabled or not.
+     *
+     * @return {@code true} if the zooming is enabled,  {@code false} otherwise.
      */
-     boolean isZoomEnabled();
-    /*
-    @param-None
-    Checks if the Panning is enabled or not.
-    Returns true is Panning is enabled else false.
+
+    boolean isZoomEnabled();
+    /**
+     * Checks if panning is enabled or not.
+     *
+     * @return {@code true} if the zooming is enabled,  {@code false} otherwise.
      */
-     boolean isPanningEnabled();
+
+    boolean isPanningEnabled();
     /*
     @param-flag
     Enables panning is flag is true else disables panning
