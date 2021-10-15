@@ -2,7 +2,6 @@ package PanoViewer;
 
 import PanoViewer.ImagePanels.FlatPanel;
 import PanoViewer.ImagePanels.PanoramicPanel;
-import PanoViewer.gui.Menu;
 
 import javax.swing.*;
 import java.awt.*;
