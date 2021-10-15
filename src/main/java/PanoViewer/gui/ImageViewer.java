@@ -3,19 +3,18 @@ package PanoViewer.gui;
 import java.awt.image.BufferedImage;
 
 public interface ImageViewer {
-    /*
-    Sets the current image
-     void setImage(Buffered Image)-
-     returns- void
-     @param-image-The image to set
+    /**
+     * Sets the Current Image
+     * @param image The image to set
+     */
 
+    void setImage(BufferedImage image);
+    /**
+     * Enables or disables zoom
+     *
+     * @param flag if true enables zoom else disables it
      */
-      void setImage(BufferedImage image);
-    /*
-    @param-flag
-    Enables zoom if flag is true else disables it.
-    void enableZoom()-Enables zoom feature
-     */
+
     void enableZoom(boolean flag);
     /**
      * Checks if zoom is enabled or not.
@@ -31,10 +30,12 @@ public interface ImageViewer {
      */
 
     boolean isPanningEnabled();
-    /*
-    @param-flag
-    Enables panning is flag is true else disables panning
+    /**
+     * Enables or disables Panning
+     *
+     * @param flag if true enables panning else disables it
      */
-     void enablePanning(boolean flag);
+
+    void enablePanning(boolean flag);
 
 }
