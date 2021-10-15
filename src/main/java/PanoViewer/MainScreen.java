@@ -1,27 +1,23 @@
 package PanoViewer;
 
-import PanoViewer.ImagePanels.PanoramicPanel;
 import PanoViewer.gui.Menu;
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.dnd.DropTarget;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
-public class MainScreen extends JFrame {
+import static java.awt.dnd.DnDConstants.ACTION_COPY;
 
-  private JLabel imageLabel;
+public class MainScreen extends JFrame implements DropTargetListener {
+
   private JMenuBar menuBar = Menu.getInstance();
   private JPanel jPanel;
   private static MainScreen instance = new MainScreen();
-
-  public void dragAndDrop() {
-    imageLabel = PanoramicPanel.getInstance().getLabel();
-    DragListener listener = new DragListener(imageLabel);
-    new DropTarget(PanoramicPanel.getInstance(),listener);
-    BufferedImage image = listener.getImage();
-    if (image!=null) {
-      SwitchModes.getInstance().setImage(image);
-    }
-  }
 
   public static MainScreen getInstance() {
     return instance;
@@ -38,5 +34,55 @@ public class MainScreen extends JFrame {
 
   public static void main(String args[]) {
     MainScreen.getInstance();
+  }
+
+  @Override
+  public void dragEnter(DropTargetDragEvent event) {
+
+  }
+
+  @Override
+  public void dragOver(DropTargetDragEvent event) {
+
+  }
+
+  @Override
+  public void dropActionChanged(DropTargetDragEvent event) {
+
+  }
+
+  @Override
+  public void dragExit(DropTargetEvent event) {
+
+  }
+
+  @Override
+  public void drop(DropTargetDropEvent event) {
+    event.acceptDrop(ACTION_COPY);
+    Transferable transferable = event.getTransferable();
+
+    DataFlavor[] dataFlavors = transferable.getTransferDataFlavors();
+
+    for (DataFlavor df : dataFlavors) {
+      try {
+        if (df.isFlavorJavaFileListType()) {
+          List<File> files = (List<File>) transferable.getTransferData(df);
+          File file = files.get(0);
+          displayImage(file.getPath());
+        }
+      }catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void displayImage(String path) {
+    BufferedImage image = null;
+    try {
+      image = ImageIO.read(new File(path));
+    }catch (IOException e) {
+      e.printStackTrace();
+    }
+    SwitchModes.getInstance().setImage(image);
   }
 }
