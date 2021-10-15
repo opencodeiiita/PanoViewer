@@ -57,4 +57,11 @@ public class Menu extends JMenuBar {
     return instance;
   }
 
+  public JCheckBoxMenuItem getPanoramic() {
+    return panoramic;
+  }
+
+  public JCheckBoxMenuItem getFlat() {
+    return flat;
+  }
 }
