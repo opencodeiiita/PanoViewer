@@ -74,7 +74,7 @@ public class AboutDialog extends JPanel {
   public static void main(String[] args) {
     JFrame owner = new JFrame("Test");
     owner.setVisible(true);
-    owner.setSize(200, 200);
+    owner.setSize(800, 600);
     owner.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     instance = getInstance(owner);
     owner.add(instance);
