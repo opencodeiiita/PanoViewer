@@ -4,37 +4,34 @@ import java.awt.image.BufferedImage;
 
 public interface ImageViewer {
     /*
+    Sets the current image
      void setImage(Buffered Image)-
      returns- void
+     @param-image-The image to set
 
      */
       void setImage(BufferedImage image);
     /*
+    @param-flag
+    Enables zoom if flag is true else disables it.
     void enableZoom()-Enables zoom feature
      */
-    void enableZoom();
-    /*
-    void disableZoom- disables zoom feature
-     */
-     void disableZoom();
+    void enableZoom(boolean flag);
     /*
     Checks if the zoom is enabled or not.
     Returns true is zoom is enabled else false.
      */
      boolean isZoomEnabled();
     /*
+    @param-None
     Checks if the Panning is enabled or not.
     Returns true is Panning is enabled else false.
      */
      boolean isPanningEnabled();
     /*
-    Enables panning
+    @param-flag
+    Enables panning is flag is true else disables panning
      */
-     void enablePanning();
-    /*
-    Disables panning
-     */
-     void disablePanning();
-
+     void enablePanning(boolean flag);
 
 }
