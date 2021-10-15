@@ -2,7 +2,6 @@ package PanoViewer;
 
 import PanoViewer.ImagePanels.FlatPanel;
 import PanoViewer.ImagePanels.PanoramicPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,9 +13,8 @@ import static PanoViewer.Utils.imageutils.isRatio;
   Switching Modes between Flat and Panoramic Images
  */
 
-public class SwitchModes extends JFrame {
+public class SwitchModes extends JPanel {
 
-  JPanel mainPanel;
   CardLayout cardLayout;
 
   private static SwitchModes instance = new SwitchModes();
@@ -32,34 +30,23 @@ public class SwitchModes extends JFrame {
 
   public void setCurrentMode(ImagePanel currentMode) {
     SwitchModes.currentMode = currentMode;
+    switchingModes();
   }
 
   private SwitchModes() {
-    setSize(600, 600);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setVisible(true);
-    mainPanel = new JPanel(new CardLayout());
-    PanoramicPanel panoramicPanel = PanoramicPanel.getInstance();
+    setBounds(50,50,400,400);
+    setLayout(new CardLayout());
     FlatPanel flatPanel = FlatPanel.getInstance();
-    mainPanel.add(ImagePanel.FlatImages.toString(), flatPanel);
-    mainPanel.add(ImagePanel.PanoramicImages.toString(), panoramicPanel);
-    add(mainPanel);
-    cardLayout = (CardLayout) mainPanel.getLayout();
-    currentMode = ImagePanel.FlatImages;
-    cardLayout.show(mainPanel, currentMode.toString());
+    PanoramicPanel panoramicPanel = PanoramicPanel.getInstance();
+    add(ImagePanel.FlatImages.toString(),flatPanel);
+    add(ImagePanel.PanoramicImages.toString(),panoramicPanel);
+    cardLayout = (CardLayout)getLayout();
+    setCurrentMode(ImagePanel.PanoramicImages);
+    cardLayout.show(this,currentMode.toString());
   }
 
-  private void switchingModes(ImagePanel imagePanel) {
-    switch (imagePanel) {
-      case FlatImages:
-        currentMode = ImagePanel.FlatImages;
-        cardLayout.show(mainPanel, currentMode.toString());
-        break;
-      case PanoramicImages:
-        currentMode = ImagePanel.PanoramicImages;
-        cardLayout.show(mainPanel, currentMode.toString());
-        break;
-    }
+  private void switchingModes() {
+    cardLayout.show(this,currentMode.toString());
   }
 
   /*
