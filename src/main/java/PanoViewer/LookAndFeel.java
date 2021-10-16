@@ -27,4 +27,3 @@ public class LookAndFeel {
         return instance;
     }
 }
-
