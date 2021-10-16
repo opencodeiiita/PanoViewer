@@ -1,6 +1,6 @@
 package PanoViewer.gui;
 
-import PanoViewer.ImagePanel;
+import PanoViewer.Mode;
 import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
 import java.awt.event.*;
@@ -78,14 +78,14 @@ public class Menu extends JMenuBar {
     flat.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().setCurrentMode(ImagePanel.FlatImages);
+        SwitchModes.getInstance().setCurrentMode(Mode.Flat);
       }
     });
 
     panoramic.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().setCurrentMode(ImagePanel.PanoramicImages);
+        SwitchModes.getInstance().setCurrentMode(Mode.Panoramic);
       }
     });
   }

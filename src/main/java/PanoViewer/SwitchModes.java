@@ -19,17 +19,17 @@ public class SwitchModes extends JPanel {
   CardLayout cardLayout;
 
   private static SwitchModes instance = new SwitchModes();
-  private static ImagePanel currentMode;
+  private static Mode currentMode;
   private BufferedImage cache;
   public static SwitchModes getInstance() {
     return instance;
   }
 
-  public ImagePanel getCurrentMode() {
+  public Mode getCurrentMode() {
     return currentMode;
   }
 
-  public void setCurrentMode(ImagePanel currentMode) {
+  public void setCurrentMode(Mode currentMode) {
     SwitchModes.currentMode = currentMode;
     switchingModes();
   }
@@ -39,10 +39,10 @@ public class SwitchModes extends JPanel {
     setLayout(new CardLayout());
     FlatPanel flatPanel = FlatPanel.getInstance();
     PanoramicPanel panoramicPanel = PanoramicPanel.getInstance();
-    add(ImagePanel.FlatImages.toString(),flatPanel);
-    add(ImagePanel.PanoramicImages.toString(),panoramicPanel);
+    add(Mode.Flat.toString(),flatPanel);
+    add(Mode.Panoramic.toString(),panoramicPanel);
     cardLayout = (CardLayout)getLayout();
-    setCurrentMode(ImagePanel.PanoramicImages);
+    setCurrentMode(Mode.Panoramic);
     cardLayout.show(this,currentMode.toString());
   }
 
@@ -59,10 +59,10 @@ public class SwitchModes extends JPanel {
     cache=image;
     if(isRatio(image))
     {
-      setCurrentMode(ImagePanel.PanoramicImages);
+      setCurrentMode(Mode.Panoramic);
     }
     else {
-      setCurrentMode(ImagePanel.FlatImages);
+      setCurrentMode(Mode.Flat);
     }
   }
 }
