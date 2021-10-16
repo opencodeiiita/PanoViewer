@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package PanoViewer.gui;
 
@@ -27,7 +27,7 @@ public interface Pannable {
    * Pans towards right if panX is positive otherwise towards left.
    * Pans towards up if panY is positive otherwise towards down.
    * @param panX
-   * @param panY 
+   * @param panY
    */
   void pan(float panX, float panY);
 
