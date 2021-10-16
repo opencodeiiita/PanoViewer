@@ -2,28 +2,39 @@ package PanoViewer;
 
 import javax.swing.*;
 
-public class LookAndFeel {
+/*
+  @author:Rohan Babbar
+  Look and Feel Class
+*/
 
-    private UIManager.LookAndFeelInfo currentLook;
-    private static LookAndFeel instance = new LookAndFeel();
+public class LookFeel {
 
-    private LookAndFeel() {
+  private LookAndFeel currentLook;
+  private static LookFeel instance = new LookFeel();
 
-    }
+  private LookFeel() {
+    currentLook = UIManager.getLookAndFeel();
+  }
 
-    public UIManager.LookAndFeelInfo[] getAllLookAndFeel() {
-        return UIManager.getInstalledLookAndFeels();
-    }
+  public UIManager.LookAndFeelInfo[] getAllLookAndFeel() {
+    return UIManager.getInstalledLookAndFeels();
+  }
 
-    public UIManager.LookAndFeelInfo getCurrentLook() {
-        return currentLook;
-    }
+  public LookAndFeel getCurrentLook() {
+    return currentLook;
+  }
 
-    public void setCurrentLook(UIManager.LookAndFeelInfo currentLook) {
-        this.currentLook = currentLook;
-    }
+  public void setCurrentLook(LookAndFeel currentLook) {
+    this.currentLook = currentLook;
+    try {
+      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      }catch (Exception e) {
+        e.printStackTrace();
+      }
+      JFrame.setDefaultLookAndFeelDecorated(true);
+  }
 
-    public static LookAndFeel getInstance() {
-        return instance;
-    }
+  public static LookFeel getInstance() {
+    return instance;
+  }
 }
