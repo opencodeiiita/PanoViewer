@@ -8,13 +8,13 @@ import javax.swing.*;
  */
 
 public class LookFeel {
-    
+
   private UIManager.LookAndFeelInfo currentLook;
   private static LookFeel instance = new LookFeel();
 
   //Constructor for LookFeel
   private LookFeel() {
-    try { 
+    try {
       UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
       currentLook = getAllLookAndFeel()[0];
     }catch (Exception e) {
