@@ -5,34 +5,48 @@ import javax.swing.*;
 /*
   @author:Rohan Babbar
   Look and Feel Class
-*/
+ */
 
 public class LookFeel {
-
-  private LookAndFeel currentLook;
+    
+  private UIManager.LookAndFeelInfo currentLook;
   private static LookFeel instance = new LookFeel();
 
+  //Constructor for LookFeel
   private LookFeel() {
-    currentLook = UIManager.getLookAndFeel();
+    try { 
+      UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+      currentLook = getAllLookAndFeel()[0];
+    }catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
+  //Get all the LookAndFeels installed in the system
   public UIManager.LookAndFeelInfo[] getAllLookAndFeel() {
     return UIManager.getInstalledLookAndFeels();
   }
 
-  public LookAndFeel getCurrentLook() {
+  // GetCurrent LookAndFeel
+  public UIManager.LookAndFeelInfo getCurrentLook() {
     return currentLook;
   }
 
-  public void setCurrentLook(LookAndFeel currentLook) {
+  // Set Current LookAndFeel
+  public void setCurrentLook(UIManager.LookAndFeelInfo currentLook) {
     this.currentLook = currentLook;
     try {
-      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-      }catch (Exception e) {
-        e.printStackTrace();
+      UIManager.setLookAndFeel(currentLook.getClassName());
+    }catch (Exception e) {
+      e.printStackTrace();
+    }
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        SwingUtilities.updateComponentTreeUI(MainScreen.getInstance());
       }
-      JFrame.setDefaultLookAndFeelDecorated(true);
-  }
+      });
+    }
 
   public static LookFeel getInstance() {
     return instance;
