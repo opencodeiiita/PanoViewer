@@ -55,7 +55,7 @@ public class joglUtils {
     }
 
     sc.close();
-    
+
     return program;
   }
 
