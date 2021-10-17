@@ -1,17 +1,27 @@
 package PanoViewer;
 
-public class ModeRecorder implements ModeListner {
-    Mode currentMode;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-    @Override
-    public void update() {
-        SwitchModes.getInstance().setCurrentMode(currentMode);
+public class ModeRecorder {
+    private PropertyChangeSupport support;
+    private Mode currentMode;
 
-    }
-    public void setMode(Mode mode)
-    {
-        currentMode = mode;
-        update();
+    public ModeRecorder() {
+        support = new PropertyChangeSupport(this);
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener ls) {
+        support.addPropertyChangeListener(ls);
+
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener ls) {
+        support.removePropertyChangeListener(ls);
+    }
+
+    public void setMode(Mode md) {
+        boolean flag = md != Mode.Panoramic;
+        support.firePropertyChange("mode", flag, !flag);
+    }
 }
