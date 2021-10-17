@@ -39,7 +39,7 @@ repositories {
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 dependencies {
-  extraLibs group: 'org.joml', name: 'joml', version: '1.10.1'
+  extraLibs group: 'org.joml', name: 'joml', version: '1.10.2'
   extraLibs group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2', classifier: 'sources'
   extraLibs group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2', classifier: 'sources'
   testImplementation 'junit:junit:4.13.2'
