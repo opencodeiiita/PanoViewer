@@ -23,7 +23,7 @@ public class AboutDialog extends JPanel {
   private JButton but;
   private static AboutDialog instance;
 
-  AboutDialog() {
+ private AboutDialog() {
     setLayout(new GridBagLayout());
     String filePath = "Images/Logos/Panoviewer.png";
     InputStream image = getFileFromResourceAsStream(filePath);
@@ -63,10 +63,11 @@ public class AboutDialog extends JPanel {
   /*
   Getter Method
    */
-  public static void getInstance() {
+  public static AboutDialog getInstance() {
     if (instance == null) {
       instance = new AboutDialog();
     }
+    return instance;
   }
 
   //driver function

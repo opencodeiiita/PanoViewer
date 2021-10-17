@@ -1,5 +1,6 @@
 package PanoViewer.gui;
 
+import PanoViewer.MainScreen;
 import PanoViewer.Mode;
 import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
@@ -93,8 +94,7 @@ public class Menu extends JMenuBar {
 
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        AboutDialog ab=new AboutDialog();
-        ab.setVisible(true);
+        MainScreen.getInstance().add(AboutDialog.getInstance());
       }
     });
 
