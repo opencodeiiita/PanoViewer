@@ -96,11 +96,11 @@ public class Menu extends JMenuBar {
 
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        JDialog jd=new JDialog(MainScreen.getInstance());jd.add(AboutDialog.getInstance());
+        JDialog jd=new JDialog(MainScreen.getInstance(),true);
+        jd.add(AboutDialog.getInstance());
         jd.setTitle("About");
-        jd.setSize((new Dimension(1000,600)));
+        jd.pack();
         jd.setLocationRelativeTo(MainScreen.getInstance());
-        jd.setModal(true);
         jd.setVisible(true);
 
       }
