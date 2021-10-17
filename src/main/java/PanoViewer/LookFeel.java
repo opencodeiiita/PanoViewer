@@ -26,7 +26,7 @@ public class LookFeel {
     return UIManager.getInstalledLookAndFeels();
   }
 
-  /* 
+  /*
     GetCurrent Look and Feel
    */
   public UIManager.LookAndFeelInfo getCurrentLook() {
