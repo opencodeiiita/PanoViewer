@@ -23,7 +23,7 @@ public class AboutDialog extends JPanel {
   private JButton but;
   private static AboutDialog instance;
 
-  private AboutDialog(JFrame owner) {
+ private AboutDialog() {
     setLayout(new GridBagLayout());
     String filePath = "Images/Logos/Panoviewer.png";
     InputStream image = getFileFromResourceAsStream(filePath);
@@ -63,21 +63,22 @@ public class AboutDialog extends JPanel {
   /*
   Getter Method
    */
-  private static AboutDialog getInstance(JFrame owner) {
+  public static AboutDialog getInstance() {
     if (instance == null) {
-      instance = new AboutDialog(owner);
+      instance = new AboutDialog();
     }
+//    instance.setVisible(true);
     return instance;
   }
 
   //driver function
-  public static void main(String[] args) {
-    JFrame owner = new JFrame("Test");
-    owner.setVisible(true);
-    owner.setSize(200, 200);
-    owner.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    instance = getInstance(owner);
-    owner.add(instance);
-    instance.setVisible(true);
-  }
+//  public static void main(String[] args) {
+//    JFrame owner = new JFrame("Test");
+//    owner.setVisible(true);
+//    owner.setSize(200, 200);
+//    owner.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//    instance = getInstance(owner);
+//    owner.add(instance);
+//    instance.setVisible(true);
+//  }
 }
