@@ -4,6 +4,8 @@ import PanoViewer.MainScreen;
 import PanoViewer.Mode;
 import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
+
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -94,7 +96,13 @@ public class Menu extends JMenuBar {
 
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        MainScreen.getInstance().add(AboutDialog.getInstance());
+        JDialog jd=new JDialog(MainScreen.getInstance());jd.add(AboutDialog.getInstance());
+        jd.setTitle("About");
+        jd.setSize((new Dimension(1000,600)));
+        jd.setLocationRelativeTo(MainScreen.getInstance());
+        jd.setModal(true);
+        jd.setVisible(true);
+
       }
     });
 

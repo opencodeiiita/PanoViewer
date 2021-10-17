@@ -67,6 +67,7 @@ public class AboutDialog extends JPanel {
     if (instance == null) {
       instance = new AboutDialog();
     }
+//    instance.setVisible(true);
     return instance;
   }
 
