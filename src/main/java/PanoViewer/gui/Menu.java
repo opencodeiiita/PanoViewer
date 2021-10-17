@@ -1,8 +1,11 @@
 package PanoViewer.gui;
 
+import PanoViewer.MainScreen;
 import PanoViewer.Mode;
 import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
+
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -88,6 +91,21 @@ public class Menu extends JMenuBar {
         SwitchModes.getInstance().setCurrentMode(Mode.Panoramic);
       }
     });
+    About.addActionListener(new ActionListener()
+    {
+
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        JDialog jd=new JDialog(MainScreen.getInstance(),true);
+        jd.add(AboutDialog.getInstance());
+        jd.setTitle("About");
+        jd.pack();
+        jd.setLocationRelativeTo(MainScreen.getInstance());
+        jd.setVisible(true);
+
+      }
+    });
+
   }
 
   // getter method
