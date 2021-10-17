@@ -12,31 +12,34 @@ public class LookFeel {
   private UIManager.LookAndFeelInfo currentLook;
   private static LookFeel instance = new LookFeel();
 
-  //Constructor for LookFeel
+  /*
+    Sets the look and feel to Metal and caches the first LaF returned by UIManager.
+   */
   private LookFeel() {
-    try {
-      UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
       currentLook = getAllLookAndFeel()[0];
-    }catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
-  //Get all the LookAndFeels installed in the system
+  /*
+    Get all the LookAndFeels installed in the system
+   */
   public UIManager.LookAndFeelInfo[] getAllLookAndFeel() {
     return UIManager.getInstalledLookAndFeels();
   }
 
-  // GetCurrent LookAndFeel
+  /* 
+    GetCurrent Look and Feel
+   */
   public UIManager.LookAndFeelInfo getCurrentLook() {
     return currentLook;
   }
 
-  // Set Current LookAndFeel
+  /*
+    Set Current Look and Feel to the LAF returned by UIManager
+   */
   public void setCurrentLook(UIManager.LookAndFeelInfo currentLook) {
-    this.currentLook = currentLook;
     try {
       UIManager.setLookAndFeel(currentLook.getClassName());
+      this.currentLook = currentLook;
     }catch (Exception e) {
       e.printStackTrace();
     }
