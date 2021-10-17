@@ -88,6 +88,16 @@ public class Menu extends JMenuBar {
         SwitchModes.getInstance().setCurrentMode(Mode.Panoramic);
       }
     });
+    About.addActionListener(new ActionListener()
+    {
+
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        AboutDialog ab=new AboutDialog();
+        ab.setVisible(true);
+      }
+    });
+
   }
 
   // getter method
