@@ -6,6 +6,8 @@ import PanoViewer.ImagePanels.PanoramicPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import static PanoViewer.Utils.imageutils.isRatio;
 
@@ -14,7 +16,7 @@ import static PanoViewer.Utils.imageutils.isRatio;
   Switching Modes between Flat and Panoramic Images
  */
 
-public class SwitchModes extends JPanel {
+public class SwitchModes extends JPanel implements PropertyChangeListener {
 
   CardLayout cardLayout;
 
@@ -35,6 +37,7 @@ public class SwitchModes extends JPanel {
   }
 
   private SwitchModes() {
+    addPropertyChangeListener(getInstance());
     setBounds(50,50,400,400);
     setLayout(new CardLayout());
     FlatPanel flatPanel = FlatPanel.getInstance();
@@ -44,6 +47,7 @@ public class SwitchModes extends JPanel {
     cardLayout = (CardLayout)getLayout();
     setCurrentMode(Mode.Panoramic);
     cardLayout.show(this,currentMode.toString());
+
   }
 
   private void switchingModes() {
@@ -64,5 +68,15 @@ public class SwitchModes extends JPanel {
     else {
       setCurrentMode(Mode.Flat);
     }
+  }
+
+  @Override
+  public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+    boolean flag= (boolean) propertyChangeEvent.getNewValue();
+    if(!flag)
+    {
+      setCurrentMode(Mode.Flat);
+    }
+    else setCurrentMode(Mode.Panoramic);
   }
 }
