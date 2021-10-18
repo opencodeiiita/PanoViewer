@@ -158,7 +158,11 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void dispose(GLAutoDrawable glad) {
-
+    GL4 gl = glad.getGL().getGL4();
+    gl.glDeleteProgram(rendering_program);
+    gl.glDeleteVertexArrays(vao.length, vao, 0);
+    gl.glDeleteBuffers(vbo.length, vbo, 0);
+    texture.destroy(gl);
   }
 
   @Override
