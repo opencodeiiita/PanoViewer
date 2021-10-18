@@ -205,6 +205,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void reshape(GLAutoDrawable glad, int x, int y, int width, int height) {
+    /*http://forum.jogamp.org/canvas-not-filling-frame-td4040092.html#a4040138*/
     GL4 gl = glad.getGL().getGL4();
     double dpiScalingFactor = ((Graphics2D) getGraphics()).getTransform().getScaleX();
     width = (int) (width * dpiScalingFactor);
@@ -218,7 +219,6 @@ public class PanoramicPanel extends JOGLImageViewer {
    *
    * Handles Mouse Events for Panning and Zooming
 */
-
   private static class HandleMouseEvent extends MouseAdapter implements Zoomable,Pannable {
     @Override
     public boolean isPanningEnabled() {
