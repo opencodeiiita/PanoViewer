@@ -20,6 +20,11 @@ public class ModeRecorder {
         return instance;
     }
 
+
+
+    //  public ModeRecorder() {
+//    support = new PropertyChangeSupport(this);
+//  }
     public Mode getCurrentMode()
     {
         return currentMode;
