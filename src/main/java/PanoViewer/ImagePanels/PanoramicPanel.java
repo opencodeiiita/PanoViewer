@@ -56,7 +56,6 @@ public class PanoramicPanel extends JOGLImageViewer {
   private boolean panningEnable;
 
   private PanoramicPanel() {
-    addGLEventListener(this);
     camera = new Camera();
     sphereLoc = new Vector3f(0,0,0);
     zoomEnable = true;

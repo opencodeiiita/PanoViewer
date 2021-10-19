@@ -11,5 +11,7 @@ import com.jogamp.opengl.awt.GLJPanel;
  * @author kshan
  */
 public abstract class JOGLImageViewer extends GLJPanel implements GLEventListener, ImageViewer {
-
+  public JOGLImageViewer() {
+    addGLEventListener(this);
+  }
 }
