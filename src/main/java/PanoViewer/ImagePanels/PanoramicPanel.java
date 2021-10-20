@@ -2,8 +2,6 @@ package PanoViewer.ImagePanels;
 
 import PanoViewer.Camera;
 import PanoViewer.gui.JOGLImageViewer;
-import PanoViewer.gui.Pannable;
-import PanoViewer.gui.Zoomable;
 import PanoViewer.math.Sphere;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL4;
@@ -91,6 +89,11 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void enablePanning(boolean enable) {
+    if (enable) {
+      addMouseMotionListener(event);
+    }else {
+      removeMouseMotionListener(event);
+    }
     this.panningEnable = enable;
   }
 
@@ -105,12 +108,17 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void enableZoom(boolean enable) {
+    if (enable) {
+      addMouseWheelListener(event);
+    }else {
+      removeMouseWheelListener(event);
+    }
     this.zoomEnable = enable;
   }
 
   @Override
   public boolean isZoomEnabled() {
-    return zoomEnable;
+     return zoomEnable;
   }
 
   @Override
@@ -228,42 +236,13 @@ public class PanoramicPanel extends JOGLImageViewer {
    *
    * Handles Mouse Events for Panning and Zooming
    */
-  private class HandleMouseEvent extends MouseAdapter implements Zoomable,Pannable {
+  private class HandleMouseEvent extends MouseAdapter {
 
     private int finalX;
     private int finalY;
 
     public HandleMouseEvent() {
 
-    }
-
-    @Override
-    public boolean isPanningEnabled() {
-      return PanoramicPanel.this.isPanningEnabled();
-    }
-
-    @Override
-    public void enablePanning(boolean enable) {
-      PanoramicPanel.this.enablePanning(enable);
-    }
-    @Override
-    public void pan(float panX, float panY) {
-      PanoramicPanel.this.pan(panX,panY);
-    }
-
-    @Override
-    public void enableZoom(boolean enable) {
-      PanoramicPanel.this.enableZoom(enable);
-    }
-
-    @Override
-    public boolean isZoomEnabled() {
-      return PanoramicPanel.this.isZoomEnabled();
-    }
-
-    @Override
-    public void zoom(float zoomBy) {
-      PanoramicPanel.this.zoom(zoomBy);
     }
 
     @Override
