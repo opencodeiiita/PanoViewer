@@ -96,7 +96,11 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void pan(float panX, float panY) {
-    event.pan(panX,panY);
+    float newYaw = (panX * fov / IDEAL_FOV);
+    float newPitch = (panY * fov / IDEAL_FOV);
+    camera.rotate(newYaw, newPitch);
+    vMat.set(camera.getViewMatrix());
+    repaint();
   }
 
   @Override
@@ -111,7 +115,11 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void zoom(float zoomBy) {
-    event.zoom(zoomBy);
+    fov += (int) zoomBy;
+    fov = Math.min(fov, MAX_FOV);
+    fov = Math.max(fov, MIN_FOV);
+    pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
+    repaint();
   }
 
   @Override
@@ -123,7 +131,6 @@ public class PanoramicPanel extends JOGLImageViewer {
     vMat.set(camera.getViewMatrix());
     mMat.translation(sphereLoc);
     texture = new Texture(GL_TEXTURE_2D);
-
   }
 
   public void setupVertices(GL4 gl) {
@@ -241,11 +248,7 @@ public class PanoramicPanel extends JOGLImageViewer {
     }
     @Override
     public void pan(float panX, float panY) {
-      float newYaw = (panX * fov / IDEAL_FOV);
-      float newPitch = (panY * fov / IDEAL_FOV);
-      camera.rotate(newYaw, newPitch);
-      vMat.set(camera.getViewMatrix());
-      repaint();
+      PanoramicPanel.this.pan(panX,panY);
     }
 
     @Override
@@ -260,11 +263,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
     @Override
     public void zoom(float zoomBy) {
-      fov += (int) zoomBy;
-      fov = Math.min(fov, MAX_FOV);
-      fov = Math.max(fov, MIN_FOV);
-      pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
-      repaint();
+      PanoramicPanel.this.zoom(zoomBy);
     }
 
     @Override
@@ -286,7 +285,7 @@ public class PanoramicPanel extends JOGLImageViewer {
       int height = e.getComponent().getHeight();
       double yaw = Math.PI * (newX -finalX ) / width * getDragSensitivity();
       double pitch = Math.PI * (finalY - newY) / height * getDragSensitivity();
-      camera.rotate((float) yaw,(float) pitch);
+      pan((float) yaw,(float) pitch);
       finalX = newX;
       finalY = newY;
     }
