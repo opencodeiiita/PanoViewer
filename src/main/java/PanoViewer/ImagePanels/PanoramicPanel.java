@@ -15,10 +15,11 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
-
-import static PanoViewer.Settings.getPrecision;
+import static PanoViewer.Settings.*;
 import static PanoViewer.Utils.joglUtils.createShaderProgram;
 import static PanoViewer.Utils.joglUtils.getTextureData;
 import static com.jogamp.opengl.GL.*;
@@ -27,7 +28,7 @@ import static com.jogamp.opengl.GL.*;
  *
  * @author Rohan Babbar
  * Panaromic Panel which displays Panoramic Images
-*/
+ */
 
 public class PanoramicPanel extends JOGLImageViewer {
 
@@ -54,12 +55,17 @@ public class PanoramicPanel extends JOGLImageViewer {
   private static PanoramicPanel instance;
   private boolean zoomEnable;
   private boolean panningEnable;
+  private HandleMouseEvent event;
 
   private PanoramicPanel() {
     camera = new Camera();
     sphereLoc = new Vector3f(0,0,0);
     zoomEnable = true;
     panningEnable = true;
+    event = new HandleMouseEvent();
+    addMouseListener(event);
+    addMouseMotionListener(event);
+    addMouseWheelListener(event);
   }
 
   public static PanoramicPanel getInstance() {
@@ -90,7 +96,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void pan(float panX, float panY) {
-    camera.rotate(panY,panX);
+    event.pan(panX,panY);
   }
 
   @Override
@@ -105,11 +111,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void zoom(float zoomBy) {
-    fov += (int) zoomBy;
-    fov = Math.min(fov, MAX_FOV);
-    fov = Math.max(fov, MIN_FOV);
-    pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
-    repaint();
+    event.zoom(zoomBy);
   }
 
   @Override
@@ -121,6 +123,7 @@ public class PanoramicPanel extends JOGLImageViewer {
     vMat.set(camera.getViewMatrix());
     mMat.translation(sphereLoc);
     texture = new Texture(GL_TEXTURE_2D);
+
   }
 
   public void setupVertices(GL4 gl) {
@@ -214,39 +217,78 @@ public class PanoramicPanel extends JOGLImageViewer {
     pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
   }
 
-/**
+  /**
    *
    * Handles Mouse Events for Panning and Zooming
-*/
-  private static class HandleMouseEvent extends MouseAdapter implements Zoomable,Pannable {
+   */
+  private class HandleMouseEvent extends MouseAdapter implements Zoomable,Pannable {
+
+    private int finalX;
+    private int finalY;
+
+    public HandleMouseEvent() {
+
+    }
+
     @Override
     public boolean isPanningEnabled() {
-      return false;
+      return PanoramicPanel.this.isPanningEnabled();
     }
 
     @Override
     public void enablePanning(boolean enable) {
-
+      PanoramicPanel.this.enablePanning(enable);
     }
-
     @Override
     public void pan(float panX, float panY) {
-
+      float newYaw = (panX * fov / IDEAL_FOV);
+      float newPitch = (panY * fov / IDEAL_FOV);
+      camera.rotate(newYaw, newPitch);
+      vMat.set(camera.getViewMatrix());
+      repaint();
     }
 
     @Override
     public void enableZoom(boolean enable) {
-
+      PanoramicPanel.this.enableZoom(enable);
     }
 
     @Override
     public boolean isZoomEnabled() {
-      return false;
+      return PanoramicPanel.this.isZoomEnabled();
     }
 
     @Override
     public void zoom(float zoomBy) {
+      fov += (int) zoomBy;
+      fov = Math.min(fov, MAX_FOV);
+      fov = Math.max(fov, MIN_FOV);
+      pMat.setPerspective((float) Math.toRadians(fov), aspect, 0.1f, 1000.0f);
+      repaint();
+    }
 
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+      zoom(e.getWheelRotation()* getWheelSensitivity());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+      finalX = e.getX();
+      finalY = e.getY();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+      int newX = e.getX();
+      int newY = e.getY();
+      int width = e.getComponent().getWidth();
+      int height = e.getComponent().getHeight();
+      double yaw = Math.PI * (newX -finalX ) / width * getDragSensitivity();
+      double pitch = Math.PI * (finalY - newY) / height * getDragSensitivity();
+      camera.rotate((float) yaw,(float) pitch);
+      finalX = newX;
+      finalY = newY;
     }
   }
 }
