@@ -67,9 +67,19 @@ public class Menu extends JMenuBar {
 
     settings.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent e) {}
+      public void actionPerformed(ActionEvent e){
+        JDialog jd=new JDialog(MainScreen.getInstance(),true);
+        jd.add(SettingsDialog.getInstance());
+        //jd.add(SettingsDialog.getInstance());
+        jd.setTitle("SettingsDialog");
+        jd.setSize(450,420);
+        jd.setLocationRelativeTo(MainScreen.getInstance());
+        jd.setVisible(true);
 
-    });
+
+      }
+
+  });
 
     File.add(open);
     File.add(exit);
