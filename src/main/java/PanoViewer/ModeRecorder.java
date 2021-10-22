@@ -6,32 +6,25 @@ import java.beans.PropertyChangeSupport;
 public class ModeRecorder {
     private static PropertyChangeSupport support;
     private Mode currentMode;
-    private ModeRecorder instance;
+    private static ModeRecorder instance;
     private ModeRecorder()
     {
+        currentMode = Mode.Panoramic;
+        support = new PropertyChangeSupport(this);
     }
-    public ModeRecorder getInstance()
-    {
-        if(instance==null)
-        {
-            instance=new ModeRecorder();
-            support=new PropertyChangeSupport(this);
+    public static ModeRecorder getInstance() {
+        if (instance == null) {
+            instance = new ModeRecorder();
         }
         return instance;
     }
 
-
-
-    //  public ModeRecorder() {
-//    support = new PropertyChangeSupport(this);
-//  }
     public Mode getCurrentMode()
     {
         return currentMode;
     }
-    public  void addPropertyChangeListener(PropertyChangeListener ls) {
+    public void addPropertyChangeListener(PropertyChangeListener ls) {
         support.addPropertyChangeListener(ls);
-
     }
 
     public void removePropertyChangeListener(PropertyChangeListener ls) {
@@ -39,14 +32,14 @@ public class ModeRecorder {
     }
     /**
      * @var-if mode md is Panoramic  then flag is false  else true hence a property change is propagated
-     * @param  md -mode to be set
+     * @param  newMode -mode to be set
      *
      *
      *
      */
-    public void setMode(Mode md) {
-        boolean flag = md != Mode.Panoramic;
-        support.firePropertyChange("mode", flag, !flag);
-        currentMode=md;
+    public void setCurrentMode(Mode newMode) {
+        Mode oldMode = getCurrentMode();
+        support.firePropertyChange("mode",oldMode,newMode);
+        currentMode = newMode;
     }
 }
