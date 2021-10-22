@@ -72,7 +72,8 @@ public class Menu extends JMenuBar {
         jd.add(SettingsDialog.getInstance());
         //jd.add(SettingsDialog.getInstance());
         jd.setTitle("SettingsDialog");
-        jd.setSize(450,420);
+        //jd.setSize(450,420);
+        jd.pack();
         jd.setLocationRelativeTo(MainScreen.getInstance());
         jd.setVisible(true);
       }
