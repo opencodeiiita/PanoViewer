@@ -3,7 +3,6 @@ package PanoViewer.gui;
 import PanoViewer.MainScreen;
 import PanoViewer.Mode;
 import PanoViewer.ModeRecorder;
-import PanoViewer.SwitchModes;
 import PanoViewer.Utils.IOUtils;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -24,7 +23,8 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
   private static Menu instance;// creating a menu instance
 
   // private constructor for implementing singleton design principle
-  public Menu() {
+  private Menu() {
+    ModeRecorder.getInstance().addPropertyChangeListener(this);
     // menuBar=new JMenuBar();
     File = new JMenu("File");
     Help = new JMenu("Help");
@@ -116,8 +116,13 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
     if (evt.getPropertyName().equals("mode")) {
-      Mode newMode = (Mode) evt.getOldValue();
-      SwitchModes.getInstance().switchingModes(newMode);
+      Mode newMode = (Mode) evt.getNewValue();
+      if (newMode.equals(Mode.Flat)) {
+        flat.setSelected(true);
+      }else {
+        panoramic.setSelected(true);
+      }
     }
   }
+
 }

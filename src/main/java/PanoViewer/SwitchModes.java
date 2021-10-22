@@ -29,6 +29,7 @@ public class SwitchModes extends JPanel implements PropertyChangeListener {
   }
 
   private SwitchModes() {
+    ModeRecorder.getInstance().addPropertyChangeListener(this);
     setBounds(50,50,400,400);
     setLayout(new CardLayout());
     FlatPanel flatPanel = FlatPanel.getInstance();
@@ -62,7 +63,7 @@ public class SwitchModes extends JPanel implements PropertyChangeListener {
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
     if (evt.getPropertyName().equals("mode")) {
-      Mode mode = (Mode) evt.getOldValue();
+      Mode mode = (Mode) evt.getNewValue();
       switchingModes(mode);
     }
   }
