@@ -17,6 +17,7 @@ buildscript {
   }
   dependencies {
     classpath "com.diffplug.spotless:spotless-plugin-gradle:5.16.0"
+    classpath 'de.undercouch:gradle-download-task:4.1.2'
   }
 }
 
@@ -32,6 +33,16 @@ spotless {
     removeUnusedImports()
   }
 }
+apply plugin: 'de.undercouch.download'
+
+import de.undercouch.gradle.tasks.download.Download
+
+task downloadFile(type: Download) {
+    src 'https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/fat/jogamp-fat.jar'
+    dest 'libs'
+    onlyIfModified true
+}
+
 repositories {
   jcenter()
   mavenCentral()
@@ -40,7 +51,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 dependencies {
   extraLibs group: 'org.joml', name: 'joml', version: '1.10.2'
-  implementation fileTree(dir: 'libs', includes: ['*.jar'])
+  extraLibs files('/libs/jogamp-fat.jar')
   testImplementation 'junit:junit:4.13.2'
   configurations.api.extendsFrom(configurations.extraLibs)
 }
