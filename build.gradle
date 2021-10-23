@@ -35,10 +35,10 @@ spotless {
 }
 
 apply plugin: 'de.undercouch.download'
-import de.undercouch.gradle.tasks.download.Download
-task downloadFile(type: Download) {
+// import de.undercouch.gradle.tasks.download.Download
+downloadFile {
     src 'https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/fat/jogamp-fat.jar'
-    dest 'libs'
+    dest '/libs'
     onlyIfModified true
 }
 
