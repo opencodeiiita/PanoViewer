@@ -1,12 +1,15 @@
 package PanoViewer.gui;
 
-import PanoViewer.ImagePanel;
-import PanoViewer.SwitchModes;
+import PanoViewer.MainScreen;
+import PanoViewer.Mode;
+import PanoViewer.ModeRecorder;
 import PanoViewer.Utils.IOUtils;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
-public class Menu extends JMenuBar {
+public class Menu extends JMenuBar implements PropertyChangeListener {
 
   private JMenu File;// creating menu objects
   private JMenu Help;// creating menu objects
@@ -17,11 +20,11 @@ public class Menu extends JMenuBar {
   private JCheckBoxMenuItem flat;
   private JCheckBoxMenuItem panoramic;
   private ButtonGroup group = new ButtonGroup();
-
   private static Menu instance;// creating a menu instance
-  // private constructor for implementing singleton design principle
 
+  // private constructor for implementing singleton design principle
   private Menu() {
+    ModeRecorder.getInstance().addPropertyChangeListener(this);
     // menuBar=new JMenuBar();
     File = new JMenu("File");
     Help = new JMenu("Help");
@@ -64,7 +67,16 @@ public class Menu extends JMenuBar {
 
     settings.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent e) {}
+      public void actionPerformed(ActionEvent e) {
+        JDialog jd=new JDialog(MainScreen.getInstance(),true);
+        jd.add(SettingsDialog.getInstance());
+        //jd.add(SettingsDialog.getInstance());
+        jd.setTitle("SettingsDialog");
+        //jd.setSize(450,420);
+        jd.pack();
+        jd.setLocationRelativeTo(MainScreen.getInstance());
+        jd.setVisible(true);
+      }
 
     });
 
@@ -74,18 +86,30 @@ public class Menu extends JMenuBar {
     options.add(settings);
     mode.add(flat);
     mode.add(panoramic);
-
     flat.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().setCurrentMode(ImagePanel.FlatImages);
+        ModeRecorder.getInstance().setCurrentMode(Mode.Flat);
       }
     });
 
     panoramic.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SwitchModes.getInstance().setCurrentMode(ImagePanel.PanoramicImages);
+        ModeRecorder.getInstance().setCurrentMode(Mode.Panoramic);
+      }
+    });
+    About.addActionListener(new ActionListener()
+    {
+
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        JDialog jd=new JDialog(MainScreen.getInstance(),true);
+        jd.add(AboutDialog.getInstance());
+        jd.setTitle("About");
+        jd.pack();
+        jd.setLocationRelativeTo(MainScreen.getInstance());
+        jd.setVisible(true);
       }
     });
   }
@@ -96,6 +120,18 @@ public class Menu extends JMenuBar {
       instance = new Menu();
     }
     return instance;
+  }
+
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
+    if (evt.getPropertyName().equals("mode")) {
+      Mode newMode = (Mode) evt.getNewValue();
+      if (newMode.equals(Mode.Flat)) {
+        flat.setSelected(true);
+      }else {
+        panoramic.setSelected(true);
+      }
+    }
   }
 
 }

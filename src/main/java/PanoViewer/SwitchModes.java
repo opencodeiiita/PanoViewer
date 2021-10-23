@@ -5,51 +5,42 @@ import PanoViewer.ImagePanels.PanoramicPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import static PanoViewer.Utils.imageutils.isRatio;
 
-/*
-  @author - Rohan Babbar
-  Switching Modes between Flat and Panoramic Images
- */
+/**
+ @author - Rohan Babbar
+ Switching Modes between Flat and Panoramic Images
+*/
 
-public class SwitchModes extends JPanel {
+public class SwitchModes extends JPanel implements PropertyChangeListener {
 
   CardLayout cardLayout;
 
-  private static SwitchModes instance = new SwitchModes();
-  private static ImagePanel currentMode;
+  private static SwitchModes instance;
   private BufferedImage cache;
   public static SwitchModes getInstance() {
+    if (instance == null) {
+      instance = new SwitchModes();
+    }
     return instance;
   }
 
-  public ImagePanel getCurrentMode() {
-    return currentMode;
-  }
-
-  public void setCurrentMode(ImagePanel currentMode) {
-    SwitchModes.currentMode = currentMode;
-    switchingModes();
-  }
-
   private SwitchModes() {
+    ModeRecorder.getInstance().addPropertyChangeListener(this);
     setBounds(50,50,400,400);
     setLayout(new CardLayout());
     FlatPanel flatPanel = FlatPanel.getInstance();
     PanoramicPanel panoramicPanel = PanoramicPanel.getInstance();
-    add(ImagePanel.FlatImages.toString(),flatPanel);
-    add(ImagePanel.PanoramicImages.toString(),panoramicPanel);
+    add(Mode.Flat.toString(),flatPanel);
+    add(Mode.Panoramic.toString(),panoramicPanel);
     cardLayout = (CardLayout)getLayout();
-    setCurrentMode(ImagePanel.PanoramicImages);
-    cardLayout.show(this,currentMode.toString());
+    cardLayout.show(this,Mode.Panoramic.toString());
   }
 
-  private void switchingModes() {
-    cardLayout.show(this,currentMode.toString());
-  }
-
-  /*
+  /**
    * Sets the image to be displayed.
    *
    * @param image the image to be set.
@@ -58,10 +49,22 @@ public class SwitchModes extends JPanel {
     cache=image;
     if(isRatio(image))
     {
-      setCurrentMode(currentMode.PanoramicImages);
+      ModeRecorder.getInstance().setCurrentMode(Mode.Panoramic);
     }
-    else
-      setCurrentMode(currentMode.FlatImages);
+    else {
+      ModeRecorder.getInstance().setCurrentMode(Mode.Flat);
+    }
+  }
 
+  public void switchingModes(Mode mode) {
+    cardLayout.show(this,mode.toString());
+  }
+
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
+    if (evt.getPropertyName().equals("mode")) {
+      Mode mode = (Mode) evt.getNewValue();
+      switchingModes(mode);
+    }
   }
 }
