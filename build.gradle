@@ -33,10 +33,9 @@ spotless {
     removeUnusedImports()
   }
 }
+
 apply plugin: 'de.undercouch.download'
-
 import de.undercouch.gradle.tasks.download.Download
-
 task downloadFile(type: Download) {
     src 'https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/fat/jogamp-fat.jar'
     dest 'libs'
@@ -47,6 +46,7 @@ repositories {
   jcenter()
   mavenCentral()
 }
+
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 dependencies {
