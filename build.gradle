@@ -15,6 +15,7 @@ configurations {
 }
 
 download {
+    mkdir "/libs"
     src 'https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/fat/jogamp-fat.jar'
     dest "libs"
     overwrite false
