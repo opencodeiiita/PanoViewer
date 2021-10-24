@@ -1,3 +1,7 @@
+plugins {
+  id "com.diffplug.spotless" version "5.17.0"
+  id "de.undercouch.download" version "4.1.2"
+}
 apply plugin: 'java-library'
 apply plugin: 'jacoco'
 apply plugin: 'application'
@@ -9,18 +13,14 @@ configurations {
   // configuration that holds jars to include in the jar
   extraLibs
 }
-buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-  }
-  dependencies {
-    classpath "com.diffplug.spotless:spotless-plugin-gradle:5.16.0"
-  }
+
+download {
+    mkdir "libs"
+    src 'https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/fat/jogamp-fat.jar'
+    dest "libs"
+    overwrite false
 }
 
-apply plugin: "com.diffplug.spotless"
 spotless {
   java {
     target "**/*.java"
@@ -32,19 +32,24 @@ spotless {
     removeUnusedImports()
   }
 }
+
 repositories {
   jcenter()
   mavenCentral()
 }
+
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
+
 dependencies {
-  extraLibs group: 'org.joml', name: 'joml', version: '1.10.2'
-  extraLibs group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2', classifier: 'sources'
-  extraLibs group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2', classifier: 'sources'
+  extraLibs files("libs/jogamp-fat.jar")
+  extraLibs group: 'org.joml', name: 'joml', version: '1.10.1'
+  //extraLibs group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2', classifier: 'sources'
+  //extraLibs group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2', classifier: 'sources'
   testImplementation 'junit:junit:4.13.2'
   configurations.api.extendsFrom(configurations.extraLibs)
 }
+
 jar {
   manifest {
     attributes(
