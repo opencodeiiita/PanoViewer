@@ -22,10 +22,8 @@ public class Camera {
   /* Perspective matrix generated from this camera's orientation. */
   public final Matrix4f lookAtMat;
   /* Yaw of this camera. Value should be between 0 and 2*pi. */
-  //yaw is a counterclockwise rotation of alpha about the z-axis.
   public double yaw = 0;
   /* Pitch of this camera. Value should be between -pi/2 and pi/2. */
-  //A pitch is a counterclockwise rotation of beta about the y-axis.
   public double pitch = 0;
 
   
@@ -36,8 +34,6 @@ public class Camera {
     pitchAxis = new Vector3f(1, 0, 0);
     lookAtMat = new Matrix4f();
     updateViewMatrix();    
-    //System.out.println(lookAtMat.setLookAt(pos, up ,target));
-    //System.out.println("Camera line 34:");
   }
 /**
  * Changes the target and normalizes it to unit matrix.
@@ -45,9 +41,7 @@ public class Camera {
  */
   public void changeTarget(Vector3f newTarget) {
     target.set(newTarget.normalize());
-    updateViewMatrix();  //lookAtMat.setLookAt(pos, up ,target);
-    //System.out.println("changeTarget line 48:");
-    //System.out.println(lookAtMat.setLookAt(pos, up ,target));
+    updateViewMatrix(); 
   }
 /**
  * 
@@ -55,16 +49,12 @@ public class Camera {
  */
   public Matrix4f getViewMatrix() {
     return lookAtMat;
-    //System.out.println(getViewMatrix());
-    //System.out.println("UpdateViewMatrix line 58:");
   }
 /**
  * updates the orientation to (pos(x),up(y),target(z)) matrix.
  */
   public void updateViewMatrix() {
     lookAtMat.setLookAt(pos, up ,target);
-//    System.out.println("UpdateViewMatrix line 60:");
-//    System.out.println(lookAtMat);
   }
 /**
  * 
@@ -75,8 +65,6 @@ public class Camera {
     rotateY(yaw);
     rotateAlongPitchAxis(pitch);
     updateViewMatrix();
-    //System.out.println("rotate line 79:");
-    //System.out.println(lookAtMat.setLookAt(pos, up ,target));
   }
 /**
  * rotates camera towards cross product of direction matrix.
@@ -88,12 +76,6 @@ public class Camera {
     pitchAxis.rotateY(deltaYaw);
     yaw += deltaYaw;  //yaw+ deltaYaw
     yaw = yaw > 2 * Math.PI ? yaw - 2 * Math.PI : yaw < 0 ? yaw + 2 * Math.PI : yaw;
-                               //deltaYaw           (back in range  0,2pi)     else yaw
-    //System.out.println(pitchAxis.rotateY(deltaYaw));
-    //System.out.println("rotateY line 90:");
-    //System.out.println(yaw);
-    //System.out.println(lookAtMat.setLookAt(pos, up ,target));
-    
   }                           
   /**
    * rotates up & target vector along the pitch axis in clockwise direction.
@@ -107,8 +89,6 @@ public class Camera {
       deltaPitch = (float) (-Math.PI / 2 - pitch);
     }
     pitch += deltaPitch;
-//    System.out.println("pitch");
-//    System.out.println(pitch);
     target.rotateAxis(deltaPitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
     up.rotateAxis(deltaPitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
   }
