@@ -4,19 +4,17 @@
  */
 
 import PanoViewer.Camera;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;  
 import org.junit.Test;
 import static org.junit.Assert.*;
 /**
  *
- * 
+ *
  */
 public class cameraunittest {
-  
+
   public cameraunittest() {}
-  
-  
+
+
   @Test
   public void Camera_test(){
     Camera camera_new= new Camera();
@@ -27,21 +25,24 @@ public class cameraunittest {
    @Test
    public void rotateY_test(){
       Camera rotate_new = new Camera();
+      rotate_new.rotateY(3);
       double yaw = rotate_new.getYaw();
       assertEquals(true, yaw>=0 && yaw<=2*Math.PI);
    }
-      
+
    @Test
    public void rotateAlongPitchAxis_test(){
      Camera rotatealongpitchaxis = new Camera();
+     rotatealongpitchaxis.rotateAlongPitchAxis(9);
      double outputaxis = rotatealongpitchaxis.getPitch();
-     assertEquals(0.0,outputaxis,0.0001);
+     assertEquals(1.57,outputaxis,0.001);
    }
 
    @Test
    public void rotate_test(){
-     Camera rotate_test = new Camera(); 
+     Camera rotate_test = new Camera();
+     rotate_test.rotate(-7,2);
      assertEquals(false, rotate_test.getPitch() >= Math.PI/2 && rotate_test.getPitch()<-Math.PI/2);
-       
+
    }
 }

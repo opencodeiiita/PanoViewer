@@ -1,7 +1,7 @@
 package PanoViewer;
 
 import org.joml.Matrix4f;
-import org.joml.Vector3f;  //Holds a 3-tuple vector.
+import org.joml.Vector3f;
 
 /**
  * A fixed camera located at the (0,0,0).
@@ -11,40 +11,40 @@ import org.joml.Vector3f;  //Holds a 3-tuple vector.
 public class Camera {
 
   /*Position of Camera */
-  public final Vector3f pos;
+  private final Vector3f pos;
   /* Camera target which stays on a sphere of radius 1. */
-  public final Vector3f target;
+  private final Vector3f target;
   /* Pitch axis of camera. Initially Pointing towards +ve X axis. */
-  public final Vector3f pitchAxis;
+  private final Vector3f pitchAxis;
   /* Yaw axis of camera and up vector for calculating perspective matrix.
    Initially towards +ve Y axis.*/
-  public final Vector3f up;
+  private final Vector3f up;
   /* Perspective matrix generated from this camera's orientation. */
-  public final Matrix4f lookAtMat;
+  private final Matrix4f lookAtMat;
   /* Yaw of this camera. Value should be between 0 and 2*pi. */
-  public double yaw = 0;
+  private double yaw = 0;
   /* Pitch of this camera. Value should be between -pi/2 and pi/2. */
-  public double pitch = 0;
+  private double pitch = 0;
 
-  
+
   public Camera() {
     pos = new Vector3f(0, 0, 0);
     target = new Vector3f(0, 0, -1);
     up = new Vector3f(0, 1, 0);
     pitchAxis = new Vector3f(1, 0, 0);
     lookAtMat = new Matrix4f();
-    updateViewMatrix();    
+    updateViewMatrix();
   }
 /**
  * Changes the target and normalizes it to unit matrix.
- * @param newTarget 
+ * @param newTarget
  */
   public void changeTarget(Vector3f newTarget) {
     target.set(newTarget.normalize());
-    updateViewMatrix(); 
+    updateViewMatrix();
   }
 /**
- * 
+ *
  * @return the current view orientation in.
  */
   public Matrix4f getViewMatrix() {
@@ -57,9 +57,9 @@ public class Camera {
     lookAtMat.setLookAt(pos, up ,target);
   }
 /**
- * 
+ *
  * @param yaw
- * @param pitch 
+ * @param pitch
  */
   public void rotate(float yaw, float pitch) {
     rotateY(yaw);
@@ -68,7 +68,7 @@ public class Camera {
   }
 /**
  * rotates camera towards cross product of direction matrix.
- * @param deltaYaw 
+ * @param deltaYaw
  */
   public void rotateY(float deltaYaw) {
     target.rotateY(deltaYaw);
@@ -76,7 +76,7 @@ public class Camera {
     pitchAxis.rotateY(deltaYaw);
     yaw += deltaYaw;  //yaw+ deltaYaw
     yaw = yaw > 2 * Math.PI ? yaw - 2 * Math.PI : yaw < 0 ? yaw + 2 * Math.PI : yaw;
-  }                           
+  }
   /**
    * rotates up & target vector along the pitch axis in clockwise direction.
    * @param deltaPitch the angle to rotate by in radians.
@@ -93,21 +93,21 @@ public class Camera {
     up.rotateAxis(deltaPitch, pitchAxis.x(), pitchAxis.y(), pitchAxis.z());
   }
 /**
- * 
- * @return the current yaw angle. 
+ *
+ * @return the current yaw angle.
  */
   public double getYaw() {
     return yaw;
   }
 /**
- * 
+ *
  * @return current pitch direction.
  */
   public double getPitch() {
     return pitch;
   }
 /**
- * it resets the orientation and target to below assigned values. 
+ * it resets the orientation and target to below assigned values.
  */
   public void reset() {
     yaw = 0;
