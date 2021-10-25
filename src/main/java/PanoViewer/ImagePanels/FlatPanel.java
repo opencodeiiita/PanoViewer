@@ -79,6 +79,9 @@ public class FlatPanel extends JOGLImageViewer {
 
   @Override
   public void display(GLAutoDrawable drawable) {
+    if (texture==null) {
+      return;
+    }
     GL2 gl = drawable.getGL().getGL2();
     if (updateImage) {
       texture.updateImage(gl,textureData);
@@ -104,23 +107,9 @@ public class FlatPanel extends JOGLImageViewer {
     GL2 gl = drawable.getGL().getGL2();
     gl.glViewport(0,0,width,height);
     gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_REPLACE);
-    repaint();
   }
 
   public static FlatPanel getInstance() {
     return instance;
   }
-//
-//  public static void main(String[] args) {
-//    JFrame frame = new JFrame();
-//    frame.setVisible(true);
-//    frame.setSize(500,500);
-//    FlatPanel panel = FlatPanel.getInstance();
-//    try {
-//      panel.setImage(ImageIO.read(new File("D:\\ImageMe\\three_d.jpg")));
-//    }catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//    frame.add(panel);
-//  }
 }
