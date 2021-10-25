@@ -8,8 +8,12 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureCoords;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
-import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
+import static PanoViewer.Utils.joglUtils.getTextureData;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
   @author - Rohan Babbar
@@ -18,6 +22,7 @@ import java.awt.image.BufferedImage;
 
 public class FlatPanel extends JOGLImageViewer {
 
+  private boolean updateImage;
   private static GL2 gl;
   private BufferedImage baseImage;
   private TextureData textureData;
@@ -31,6 +36,9 @@ public class FlatPanel extends JOGLImageViewer {
   @Override
   public void setImage(BufferedImage image) {
     baseImage = image;
+    updateImage = true;
+    textureData = getTextureData(image);
+    repaint();
   }
 
   @Override
@@ -67,7 +75,6 @@ public class FlatPanel extends JOGLImageViewer {
   public void init(GLAutoDrawable drawable) {
     gl = drawable.getGL().getGL2();
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-    textureData = AWTTextureIO.newTextureData(gl.getGLProfile(), baseImage, false);
     texture = TextureIO.newTexture(textureData);
   }
 
@@ -79,6 +86,9 @@ public class FlatPanel extends JOGLImageViewer {
 
   @Override
   public void display(GLAutoDrawable drawable) {
+    if (updateImage) {
+      texture.updateImage(gl,textureData);
+    }
     texture.enable(gl);
     texture.bind(gl);
     TextureCoords coordinates = texture.getImageTexCoords();
