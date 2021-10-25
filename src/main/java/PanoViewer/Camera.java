@@ -53,7 +53,7 @@ public class Camera {
 /**
  * updates the orientation to (pos(x),up(y),target(z)) matrix.
  */
-  public void updateViewMatrix() {
+  private void updateViewMatrix() {
     lookAtMat.setLookAt(pos, up ,target);
   }
 /**
@@ -70,7 +70,7 @@ public class Camera {
  * rotates camera towards cross product of direction matrix.
  * @param deltaYaw
  */
-  public void rotateY(float deltaYaw) {
+  private void rotateY(float deltaYaw) {
     target.rotateY(deltaYaw);
     up.rotateY(deltaYaw);
     pitchAxis.rotateY(deltaYaw);
@@ -81,7 +81,7 @@ public class Camera {
    * rotates up & target vector along the pitch axis in clockwise direction.
    * @param deltaPitch the angle to rotate by in radians.
    */
-  public void rotateAlongPitchAxis(float deltaPitch) {
+  private void rotateAlongPitchAxis(float deltaPitch) {
     if (pitch + deltaPitch > Math.PI / 2) {
       deltaPitch = (float) (Math.PI / 2 - pitch);
     }
@@ -101,13 +101,13 @@ public class Camera {
   }
 /**
  *
- * @return current pitch direction.
+ * @return current pitch angle.
  */
   public double getPitch() {
     return pitch;
   }
 /**
- * it resets the orientation and target to below assigned values.
+ * It resets the orientation to target towards -ve z-axis.
  */
   public void reset() {
     yaw = 0;
@@ -118,7 +118,7 @@ public class Camera {
     updateViewMatrix();
   }
   /**
-   * changes camera orientation 90 degree upwards.
+   * Driver function to test camera class.
    * @param args
    */
   public static void main (String[] args){
