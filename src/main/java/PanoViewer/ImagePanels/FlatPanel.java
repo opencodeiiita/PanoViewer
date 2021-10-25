@@ -96,13 +96,13 @@ public class FlatPanel extends JOGLImageViewer {
     TextureCoords coordinates = texture.getImageTexCoords();
     gl.glBegin(GL2.GL_QUADS);
     gl.glTexCoord2f(coordinates.left(), coordinates.bottom());
-    gl.glVertex3f(0, 0, 0);
+    gl.glVertex3f(-1, -1, 0);
     gl.glTexCoord2f(coordinates.right(), coordinates.bottom());
-    gl.glVertex3f(1, 0, 0);
+    gl.glVertex3f(1, -1, 0);
     gl.glTexCoord2f(coordinates.right(), coordinates.top());
     gl.glVertex3f(1, 1, 0);
     gl.glTexCoord2f(coordinates.left(), coordinates.top());
-    gl.glVertex3f(0, 1, 0);
+    gl.glVertex3f(-1, 1, 0);
     gl.glEnd();
     texture.disable(gl);
   }
