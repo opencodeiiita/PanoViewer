@@ -22,6 +22,7 @@ public class FlatPanel extends JOGLImageViewer {
   private TextureData textureData;
   private Texture texture;
   private static FlatPanel instance = new FlatPanel();
+  private BufferedImage baseImage;
 
   private FlatPanel() {
 
@@ -29,8 +30,11 @@ public class FlatPanel extends JOGLImageViewer {
 
   @Override
   public void setImage(BufferedImage image) {
+    baseImage = image;
     updateImage = true;
-    textureData = getTextureData(image);
+    if (baseImage!=null) {
+      textureData = getTextureData(image);
+    }
     repaint();
   }
 
@@ -74,12 +78,13 @@ public class FlatPanel extends JOGLImageViewer {
   @Override
   public void dispose(GLAutoDrawable drawable) {
     GL2 gl = drawable.getGL().getGL2();
+    texture.disable(gl);
     texture.destroy(gl);
   }
 
   @Override
   public void display(GLAutoDrawable drawable) {
-    if (texture==null) {
+    if (baseImage==null) {
       return;
     }
     GL2 gl = drawable.getGL().getGL2();
