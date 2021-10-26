@@ -32,7 +32,6 @@ spotless {
     removeUnusedImports()
   }
 }
-
 repositories {
   jcenter()
   mavenCentral()
