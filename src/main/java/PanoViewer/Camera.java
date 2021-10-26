@@ -51,10 +51,10 @@ public class Camera {
     return lookAtMat;
   }
 /**
- * updates the orientation to (pos(x),up(y),target(z)) matrix.
+ * updates the orientation to (pos(x),target(z),up(y)) matrix.
  */
   private void updateViewMatrix() {
-    lookAtMat.setLookAt(pos, up ,target);
+    lookAtMat.setLookAt(pos, target, up);
   }
 /**
  *
