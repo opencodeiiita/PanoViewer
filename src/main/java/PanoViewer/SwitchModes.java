@@ -18,6 +18,8 @@ import static PanoViewer.Utils.imageutils.isRatio;
 public class SwitchModes extends JPanel implements PropertyChangeListener {
 
   CardLayout cardLayout;
+  private FlatPanel flatPanel = FlatPanel.getInstance();
+  private PanoramicPanel panoramicPanel = PanoramicPanel.getInstance();
 
   private static SwitchModes instance;
   private BufferedImage cache;
@@ -47,12 +49,15 @@ public class SwitchModes extends JPanel implements PropertyChangeListener {
    */
   public void setImage(BufferedImage image) {
     cache=image;
+    flatPanel.setImage(image);
+    panoramicPanel.setImage(image);
     if(isRatio(image))
     {
       ModeRecorder.getInstance().setCurrentMode(Mode.Panoramic);
     }
     else {
       ModeRecorder.getInstance().setCurrentMode(Mode.Flat);
+
     }
   }
 
