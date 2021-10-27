@@ -222,14 +222,15 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public void reshape(GLAutoDrawable glad, int x, int y, int width, int height) {
-    /*http://forum.jogamp.org/canvas-not-filling-frame-td4040092.html#a4040138*/
-    GL4 gl = glad.getGL().getGL4();
-    double dpiScalingFactor = ((Graphics2D) getGraphics()).getTransform().getScaleX();
-    width = (int) (width * dpiScalingFactor);
-    height = (int) (height * dpiScalingFactor);
-    gl.glViewport(0, 0, width, height);
-    aspect = (float) getWidth() / (float) getHeight();
-    pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
+    /* Resize haack required for java8 + GLCanvas.
+    http://forum.jogamp.org/canvas-not-filling-frame-td4040092.html#a4040138*/
+//    GL4 gl = glad.getGL().getGL4();
+//    double dpiScalingFactor = ((Graphics2D) getGraphics()).getTransform().getScaleX();
+//    width = (int) (width * dpiScalingFactor);
+//    height = (int) (height * dpiScalingFactor);
+//    gl.glViewport(0, 0, width, height);
+//    aspect = (float) getWidth() / (float) getHeight();
+//    pMat.setPerspective((float) Math.toRadians(70), aspect, 0.1f, 1000.0f);
   }
 
   /**
