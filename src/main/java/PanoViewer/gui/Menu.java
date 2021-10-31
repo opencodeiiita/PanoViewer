@@ -15,7 +15,7 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
   private JMenu Help;// creating menu objects
   private JMenu options;// creating menu objects
   private JMenuItem open, exit , settings;// creating menuitem objects
-  private JMenu About;// creating menu objects
+  private JMenuItem About;// creating menu objects
   private JMenu mode;
   private JCheckBoxMenuItem flat;
   private JCheckBoxMenuItem panoramic;
@@ -32,7 +32,7 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
     open = new JMenuItem("Open");
     exit = new JMenuItem("Exit");
     settings = new JMenuItem("Settings");
-    About = new JMenu("About");
+    About = new JMenuItem("About");
     mode = new JMenu("Mode");
     flat = new JCheckBoxMenuItem("Flat");
     panoramic = new JCheckBoxMenuItem("Panoramic");
@@ -41,7 +41,7 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
     add(mode);
     //add(Help);
     add(options);
-    add(About);
+    add(Help);
     group.add(flat);
     group.add(panoramic);
 
@@ -84,7 +84,7 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
 
     File.add(open);
     File.add(exit);
-    //Help.add(About);
+    Help.add(About);
     options.add(settings);
     mode.add(flat);
     mode.add(panoramic);
