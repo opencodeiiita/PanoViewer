@@ -15,7 +15,7 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
   private JMenu Help;// creating menu objects
   private JMenu options;// creating menu objects
   private JMenuItem open, exit , settings;// creating menuitem objects
-  private JMenuItem About;// creating menuitem objects
+  private JMenuItem About;// creating menu objects
   private JMenu mode;
   private JCheckBoxMenuItem flat;
   private JCheckBoxMenuItem panoramic;
@@ -38,11 +38,13 @@ public class Menu extends JMenuBar implements PropertyChangeListener {
     panoramic = new JCheckBoxMenuItem("Panoramic");
     panoramic.setSelected(true);
     add(File);
-    add(Help);
-    add(options);
     add(mode);
+    //add(Help);
+    add(options);
+    add(Help);
     group.add(flat);
     group.add(panoramic);
+
     // shortcut to Open menu item (ctrl + F)
     open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 
