@@ -13,7 +13,7 @@ public class Settings {
 
   private static float dragSensitivity = 1f;
   private static int wheelSensitivity = 5;
-  private static int precision = 90;
+  private static int precision = 180;
   private static GLProfile gl;
   /* Whether or not to flip the image when creating texture data. */
   private static boolean invertImage;

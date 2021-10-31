@@ -23,11 +23,10 @@ import static PanoViewer.Utils.joglUtils.getTextureData;
 import static com.jogamp.opengl.GL.*;
 
 /**
+ * Panoramic Panel which displays Panoramic Images
  *
  * @author Rohan Babbar
- * Panaromic Panel which displays Panoramic Images
  */
-
 public class PanoramicPanel extends JOGLImageViewer {
 
   private final int[] vao = new int[1];
@@ -57,7 +56,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   private PanoramicPanel() {
     camera = new Camera();
-    sphereLoc = new Vector3f(0,0,0);
+    sphereLoc = new Vector3f(0, 0, 0);
     zoomEnable = true;
     panningEnable = true;
     event = new HandleMouseEvent();
@@ -91,7 +90,7 @@ public class PanoramicPanel extends JOGLImageViewer {
   public void enablePanning(boolean enable) {
     if (enable) {
       addMouseMotionListener(event);
-    }else {
+    } else {
       removeMouseMotionListener(event);
     }
     this.panningEnable = enable;
@@ -110,7 +109,7 @@ public class PanoramicPanel extends JOGLImageViewer {
   public void enableZoom(boolean enable) {
     if (enable) {
       addMouseWheelListener(event);
-    }else {
+    } else {
       removeMouseWheelListener(event);
     }
     this.zoomEnable = enable;
@@ -118,7 +117,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
   @Override
   public boolean isZoomEnabled() {
-     return zoomEnable;
+    return zoomEnable;
   }
 
   @Override
@@ -172,7 +171,6 @@ public class PanoramicPanel extends JOGLImageViewer {
     gl.glBufferData(GL_ARRAY_BUFFER, texBuff.limit() * 4L, texBuff, GL_STATIC_DRAW);
   }
 
-
   @Override
   public void dispose(GLAutoDrawable glad) {
     GL4 gl = glad.getGL().getGL4();
@@ -187,6 +185,11 @@ public class PanoramicPanel extends JOGLImageViewer {
     GL4 gl = glad.getGL().getGL4();
     if (updateImage) {
       texture.updateImage(gl, textureData);
+      if (gl.isExtensionAvailable("GL_EXT_texture_filter_anisotropic")) {
+        float max[] = new float[1];
+        gl.glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, max, 0);
+        gl.glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, max[0]);
+      }
     }
     gl.glClear(GL_DEPTH_BUFFER_BIT);
     gl.glClear(GL_COLOR_BUFFER_BIT);
@@ -248,7 +251,7 @@ public class PanoramicPanel extends JOGLImageViewer {
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-      zoom(e.getWheelRotation()* getWheelSensitivity());
+      zoom(e.getWheelRotation() * getWheelSensitivity());
     }
 
     @Override
@@ -263,9 +266,9 @@ public class PanoramicPanel extends JOGLImageViewer {
       int newY = e.getY();
       int width = e.getComponent().getWidth();
       int height = e.getComponent().getHeight();
-      double yaw = Math.PI * (newX -finalX ) / width * getDragSensitivity();
+      double yaw = Math.PI * (newX - finalX) / width * getDragSensitivity();
       double pitch = Math.PI * (finalY - newY) / height * getDragSensitivity();
-      pan((float) yaw,(float) pitch);
+      pan((float) yaw, (float) pitch);
       finalX = newX;
       finalY = newY;
     }
