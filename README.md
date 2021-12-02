@@ -1,3 +1,8 @@
+# This repo has been Archived.
+
+## For latest version, please visit [PanoViewer](https://github.com/GhostFoxSledgehammer/PanoViewer)
+
+---
 OpenGL based Image Viewer for 360 degrees Panoramic Images.
 [LICENSE](LICENSE) : GPL.
 
